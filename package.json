@@ -1,6 +1,6 @@
 {
   "name": "network-avatar-picker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A picker for networks profile images.",
   "main": "lib/index.js",
   "scripts": {
