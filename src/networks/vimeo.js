@@ -21,7 +21,7 @@ module.exports = class VimeoService {
 
   _getImageBuffer(imageUrl) {
     return this._avatarService.get(imageUrl, 'vimeo')
-      .then(buffer => ({ imageBuffer: buffer, imageUrl }))
+      .then(buffer => buffer)
       .catch(error => Promise.reject(error));
   }
 };

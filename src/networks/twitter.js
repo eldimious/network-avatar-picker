@@ -14,7 +14,7 @@ module.exports = class TwitterService {
   getAvatar(username) {
     const url = `https://twitter.com/${username}/profile_image?size=original`;
     return this._avatarService.get(url, 'twitter')
-      .then(buffer => ({ imageBuffer: buffer, imageUrl: `https://twitter.com/${username}/profile_image?size=original` }))
+      .then(buffer => buffer)
       .catch(error => Promise.reject(error));
   }
 };

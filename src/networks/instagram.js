@@ -21,7 +21,7 @@ module.exports = class InstagramService {
 
   _getImageBuffer(imageUrl) {
     return this._avatarService.get(imageUrl, 'instagram')
-      .then(buffer => ({ imageBuffer: buffer, imageUrl }))
+      .then(buffer => buffer)
       .catch(error => Promise.reject(error));
   }
 };
