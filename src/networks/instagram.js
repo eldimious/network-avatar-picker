@@ -1,4 +1,6 @@
 'use strict';
+const Promise = require('bluebird');
+
 
 module.exports = class InstagramService {
   constructor(avatarService) {
@@ -13,6 +15,6 @@ module.exports = class InstagramService {
     const url = `https://www.instagram.com/${username}/`;
     return this._avatarService.getViaOpenGraph(url, 'instagram')
       .then(image => image)
-      .catch(error =>  Promise.reject(error);
+      .catch(error => Promise.reject(error));
   }
 };

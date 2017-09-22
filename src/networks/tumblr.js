@@ -1,5 +1,7 @@
 'use strict';
 
+const Promise = require('bluebird');
+
 module.exports = class TumblrService {
   constructor(avatarService) {
     this._avatarService = avatarService;
@@ -13,6 +15,6 @@ module.exports = class TumblrService {
     const url = `https://api.tumblr.com/v2/blog/${username}/avatar`;
     return this._avatarService.get(url, 'tumblr')
       .then(image => image)
-      .catch(error =>  Promise.reject(error);
+      .catch(error => Promise.reject(error));
   }
 };
