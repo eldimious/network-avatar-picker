@@ -12,16 +12,9 @@ module.exports = class InstagramService {
   }
 
   getAvatar(username) {
-    const url = `https://www.instagram.com/${username}/`;
-    return this._avatarService.getViaOpenGraph(url, 'instagram')
-      .then(imageUrl => this._getImageBuffer(imageUrl))
+    return this._avatarService.findImage(`https://www.instagram.com/${username}/`, 'instagram')
+      .then(imageUrl => this._avatarService.getImage(imageUrl, 'instagram'))
       .then(response => response)
-      .catch(error => Promise.reject(error));
-  }
-
-  _getImageBuffer(imageUrl) {
-    return this._avatarService.get(imageUrl, 'instagram')
-      .then(buffer => buffer)
       .catch(error => Promise.reject(error));
   }
 };

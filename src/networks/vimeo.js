@@ -12,16 +12,9 @@ module.exports = class VimeoService {
   }
 
   getAvatar(username) {
-    const url = `https://www.vimeo.com/${username}`;
-    return this._avatarService.getViaOpenGraph(url, 'vimeo')
-      .then(imageUrl => this._getImageBuffer(imageUrl))
+    return this._avatarService.findImage(`https://www.vimeo.com/${username}`, 'vimeo')
+      .then(imageUrl => this._avatarService.getImage(imageUrl, 'vimeo'))
       .then(response => response)
-      .catch(error => Promise.reject(error));
-  }
-
-  _getImageBuffer(imageUrl) {
-    return this._avatarService.get(imageUrl, 'vimeo')
-      .then(buffer => buffer)
       .catch(error => Promise.reject(error));
   }
 };

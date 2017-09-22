@@ -8,7 +8,8 @@ Promise.promisifyAll(require('request'));
 function init() {
   const createErrorMessage = (error, defaultMsg) => error && error.message ? error.message : defaultMsg;
 
-  const getAvatar = (url, network) => request.getAsync({ url, encoding: null })
+
+  const getImage = (url, network) => request.getAsync({ url, encoding: null })
     .then((response) => {
       if (response.statusCode !== 200) {
         return Promise.reject(new Error(`Get ${network} avatar statusCode !== 200.`));
@@ -20,7 +21,8 @@ function init() {
     })
     .catch(error => Promise.reject(new Error(createErrorMessage(error, `Error in ${network} get avatar function.`))));
 
-  const getAvatarViaOpenGraph = (url, network) => request.getAsync({ url, encoding: null })
+
+  const findImage = (url, network) => request.getAsync({ url, encoding: null })
     .then((response) => {
       if (response.statusCode !== 200) {
         return Promise.reject(new Error(`Get ${network} avatar statusCode !== 200.`));
@@ -45,8 +47,8 @@ function init() {
     .catch(error => Promise.reject(new Error(createErrorMessage(error, `Error in ${network} get avatar function.`))));
 
   return Object.freeze({
-    get: getAvatar,
-    getViaOpenGraph: getAvatarViaOpenGraph,
+    getImage,
+    findImage,
   });
 }
 
