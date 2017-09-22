@@ -14,7 +14,7 @@ module.exports = class TumblrService {
   getAvatar(username) {
     const url = `https://api.tumblr.com/v2/blog/${username}/avatar`;
     return this._avatarService.get(url, 'tumblr')
-      .then(image => image)
+      .then(buffer => ({ imageBuffer: buffer }))
       .catch(error => Promise.reject(error));
   }
 };

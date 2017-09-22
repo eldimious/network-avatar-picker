@@ -14,7 +14,14 @@ module.exports = class VimeoService {
   getAvatar(username) {
     const url = `https://www.vimeo.com/${username}`;
     return this._avatarService.getViaOpenGraph(url, 'vimeo')
-      .then(image => image)
+      .then(imageUrl => this._getImageBuffer(imageUrl))
+      .then(response => response)
+      .catch(error => Promise.reject(error));
+  }
+
+  _getImageBuffer(imageUrl) {
+    return this._avatarService.get(imageUrl, 'vimeo')
+      .then(buffer => ({ imageBuffer: buffer, imageUrl }))
       .catch(error => Promise.reject(error));
   }
 };
