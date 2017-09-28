@@ -12,7 +12,7 @@ module.exports = class InstagramService {
   }
 
   getAvatar(username) {
-    return this._avatarService.getImage(`https://graph.facebook.com/${username}/picture`, 'facebook')
+    return this._avatarService.getImage(`https://graph.facebook.com/${username}/picture?type=large`, 'facebook')
       .then(response => response)
       .catch(error => Promise.reject(error));
   }
