@@ -1,6 +1,6 @@
 # network-avatar-picker
 
-> A npm module that returns as buffer a user's social network profile picture.
+> A npm module that returns as buffer a user's social network profile picture. This way, you can handle buffers and store them as images in your DB.
 
 ## Usage
 
@@ -22,3 +22,18 @@ Use the methods of the `avatarPicker` class to get user avatars from networks:
 - `avatarPicker.tumblr.getAvatar(username)`
 - `avatarPicker.vimeo.getAvatar(username)`
 - `avatarPicker.facebook.getAvatar(username)`
+
+## Example
+
+1) This way you will retrieve twitter's cnn account profile picture as buffer
+
+```JavaScript
+avatarPicker.twitter.getAvatar('cnn')
+.then(buffer => {
+  /*code*/
+})
+.catch(error => {
+  /*code*/
+});
+```
+
