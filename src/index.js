@@ -13,7 +13,4 @@ class NetworkAvatarPicker {
   }
 }
 
-module.exports = function() {
-  const avatarPicker = new NetworkAvatarPicker();
-  return avatarPicker;
-};
+module.exports = NetworkAvatarPicker;
