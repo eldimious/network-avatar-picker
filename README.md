@@ -13,7 +13,8 @@ npm install --save network-avatar-picker
 Then you should require in order to be able use it:
 
 ```javascript
-const avatarPicker = require('network-avatar-picker');
+const AvatarPickerService = require('network-avatar-picker');
+const avatarPicker = new AvatarPickerService();
 ```
 
 Use the methods of the `avatarPicker` class to get user avatars from networks:
