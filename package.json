@@ -1,7 +1,7 @@
 {
   "name": "network-avatar-picker",
   "version": "1.1.4",
-  "description": "A picker for networks profile images.",
+  "description": "A picker for user's networks profile image.",
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "./node_modules/.bin/babel -d lib src/",
