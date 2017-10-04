@@ -17,6 +17,9 @@ function init() {
       if (!response.body) {
         return Promise.reject(new Error(`Get ${network} avatar no response body.`));
       }
+      if (network === 'twitter' && response.headers && response.headers['content-type'] && response.headers['content-type'].includes('text/html')) {
+        return Promise.reject(new Error(`Get ${network} avatar no response body.`));
+      }
       return response.body;
     })
     .catch(error => Promise.reject(new Error(createErrorMessage(error, `Error in ${network} get avatar function.`))));
