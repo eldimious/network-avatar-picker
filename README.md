@@ -1,6 +1,6 @@
 # network-avatar-picker
 
-> A npm module that returns as buffer a user's social network profile picture. This way, you can handle buffers and store them as images in your DB.
+> A npm module that returns as buffer a user's social network profile picture. This way, you can handle buffers and store them as images in your DB. You can choose among twitter, instagram, tumblr, vimeo and facebook and just send a username.
 
 ## Usage
 
