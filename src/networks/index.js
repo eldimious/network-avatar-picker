@@ -1,50 +1,37 @@
-const TwitterService = require('./twitter');
-const InstagramService = require('./instagram');
-const TumblrService = require('./tumblr');
-const VimeoService = require('./vimeo');
-const FacebookService = require('./facebook');
 const avatarServiceFactory = require('../utils/avatarService');
 
+const getUrl = (type, username) => {
+  if (type === 'twitter') {
+    return `https://twitter.com/${username}/profile_image?size=original`;
+  }
+  if (type === 'tumblr') {
+    return `https://api.tumblr.com/v2/blog/${username}/avatar`;
+  }
+  if (type === 'facebook') {
+    return `https://graph.facebook.com/${username}/picture?type=large`;
+  }
+};
+
+
+const getScrapUrl = (type, username) => `https://www.${type}.com/${username}`;
+
+
 const picker = {
-  async getAvatar(type, username) {
+  async getAvatar(username) {
     try {
-      const imageUrl = await this._avatarService.findImage(`https://www.instagram.com/${username}/`, 'instagram');
-      return this._avatarService.getImage(imageUrl, 'instagram');
+      const type = this.getNetworkType();
+      const imageUrl = type === 'vimeo' || type === 'instagram' ?
+        await this.avatarService.findImage(getScrapUrl(type,username), type)
+        : getUrl(type, username);
+      return this.avatarService.getImage(imageUrl, type);
     } catch (error) {
       throw error;
     }
   },
 };
 
-function init() {
-  const avatarService = avatarServiceFactory.init();
 
-  const getAvatar = async function getAvatar(type, username) {
-    try {
-      const imageUrl = await this.avatarService.findImage(`https://www.instagram.com/${username}/`, 'instagram');
-      return this.avatarService.getImage(imageUrl, 'instagram');
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const twitterService = new TwitterService(avatarService);
-  const instagramService = new InstagramService(avatarService);
-  const tumblrService = new TumblrService(avatarService);
-  const vimeoService = new VimeoService(avatarService);
-  const facebookService = new FacebookService(avatarService);
-
-  return ({
-    twitterService,
-    instagramService,
-    tumblrService,
-    vimeoService,
-    facebookService,
-  });
-}
-
-module.exports = () => (type) => {
-  console.log('1111', type)
+module.exports = (type) => {
   const avatarService = avatarServiceFactory.init();
   return Object.assign(Object.create(picker), {
     getNetworkType() {
@@ -53,4 +40,3 @@ module.exports = () => (type) => {
     avatarService,
   });
 };
-module.exports.init = init;
