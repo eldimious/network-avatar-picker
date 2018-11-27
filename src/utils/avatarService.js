@@ -9,20 +9,23 @@ function init() {
   const createErrorMessage = (error, defaultMsg) => error && error.message ? error.message : defaultMsg;
 
 
-  const getImage = (url, network) => request.getAsync({ url, encoding: null })
-    .then((response) => {
+  const getImage = async function getImage(url, network) {
+    try {
+      const response = await request.getAsync({ url, encoding: null });
       if (response.statusCode !== 200) {
-        return Promise.reject(new Error(`Get ${network} avatar statusCode !== 200.`));
+        throw Error(`Get ${network} avatar statusCode !== 200.`);
       }
       if (!response.body) {
-        return Promise.reject(new Error(`Get ${network} avatar no response body.`));
+        throw new Error(`Get ${network} avatar no response body.`);
       }
       if (network === 'twitter' && response.headers && response.headers['content-type'] && response.headers['content-type'].includes('text/html')) {
-        return Promise.reject(new Error(`Get ${network} avatar no response body.`));
+        throw new Error(`Get ${network} avatar no response body.`);
       }
       return response.body;
-    })
-    .catch(error => Promise.reject(new Error(createErrorMessage(error, `Error in ${network} get avatar function.`))));
+    } catch (error) {
+      throw error;
+    }
+  };
 
 
   const findImage = (url, network) => request.getAsync({ url, encoding: null })
