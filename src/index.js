@@ -1,5 +1,3 @@
-'use strict';
-
 const networksFactory = require('./networks');
 
 class NetworkAvatarPicker {

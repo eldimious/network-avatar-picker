@@ -1,14 +1,8 @@
-'use strict';
-
 const Promise = require('bluebird');
 
 module.exports = class VimeoService {
   constructor(avatarService) {
     this._avatarService = avatarService;
-  }
-
-  _createErrorMessage(error, defaultMsg) {
-    return error && error.message ? error.message : defaultMsg;
   }
 
   getAvatar(username) {

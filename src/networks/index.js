@@ -1,19 +1,17 @@
-'use strict';
-
-const TwitterServiceFactory = require('./twitter');
-const InstagramServiceFactory = require('./instagram');
-const TumblrServiceFactory = require('./tumblr');
-const VimeoServiceFactory = require('./vimeo');
-const FacebookServiceFactory = require('./facebook');
-const avatarServiceFactory = require('../helper/avatarService');
+const TwitterService = require('./twitter');
+const InstagramService = require('./instagram');
+const TumblrService = require('./tumblr');
+const VimeoService = require('./vimeo');
+const FacebookService = require('./facebook');
+const avatarServiceFactory = require('../utils/avatarService');
 
 function init() {
   const avatarService = avatarServiceFactory.init();
-  const twitterService = new TwitterServiceFactory(avatarService);
-  const instagramService = new InstagramServiceFactory(avatarService);
-  const tumblrService = new TumblrServiceFactory(avatarService);
-  const vimeoService = new VimeoServiceFactory(avatarService);
-  const facebookService = new FacebookServiceFactory(avatarService);
+  const twitterService = new TwitterService(avatarService);
+  const instagramService = new InstagramService(avatarService);
+  const tumblrService = new TumblrService(avatarService);
+  const vimeoService = new VimeoService(avatarService);
+  const facebookService = new FacebookService(avatarService);
 
   return ({
     twitterService,
