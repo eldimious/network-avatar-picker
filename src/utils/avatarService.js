@@ -8,15 +8,11 @@ function init() {
   const createErrorMessage = (error, defaultMsg) => error && error.message ? error.message : defaultMsg;
 
   const handleRequestErrors = (response, network) => {
-    try {
-      if (response.statusCode !== 200) {
-        throw Error(`Get ${network} avatar statusCode !== 200.`);
-      }
-      if (!response.body) {
-        throw new Error(`Get ${network} avatar no response body.`);
-      }
-    } catch (error) {
-      throw error;
+    if (response.statusCode !== 200) {
+      throw Error(`Get ${network} avatar statusCode !== 200.`);
+    }
+    if (!response.body) {
+      throw new Error(`Get ${network} avatar no response body.`);
     }
   };
 
@@ -62,4 +58,3 @@ function init() {
 }
 
 module.exports.init = init;
-
