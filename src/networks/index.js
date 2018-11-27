@@ -31,7 +31,7 @@ const picker = {
 };
 
 
-module.exports = (type) => {
+module.exports.init = (type) => {
   const avatarService = avatarServiceFactory.init();
   return Object.assign(Object.create(picker), {
     getNetworkType() {

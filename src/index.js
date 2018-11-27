@@ -1,13 +1,12 @@
-const networksFactory = require('./networks');
+const networks = require('./networks');
 
 class NetworkAvatarPicker {
   constructor() {
-    const networksService = networksFactory.init();
-    this.twitter = networksService.twitterService;
-    this.instagram = networksService.instagramService;
-    this.tumblr = networksService.tumblrService;
-    this.vimeo = networksService.vimeoService;
-    this.facebook = networksService.facebookService;
+    this.twitter = networks.init('twitter');
+    this.instagram = networks.init('instagram');
+    this.tumblr = networks.init('tumblr');
+    this.vimeo = networks.init('vimeo');
+    this.facebook = networks.init('facebook');
   }
 }
 
