@@ -1,27 +1,42 @@
-'use strict';
+const avatarServiceFactory = require('../utils/avatarService');
 
-const TwitterServiceFactory = require('./twitter');
-const InstagramServiceFactory = require('./instagram');
-const TumblrServiceFactory = require('./tumblr');
-const VimeoServiceFactory = require('./vimeo');
-const FacebookServiceFactory = require('./facebook');
-const avatarServiceFactory = require('../helper/avatarService');
+const getImageUrl = (type, username) => {
+  if (type === 'twitter') {
+    return `https://twitter.com/${username}/profile_image?size=original`;
+  }
+  if (type === 'tumblr') {
+    return `https://api.tumblr.com/v2/blog/${username}/avatar`;
+  }
+  if (type === 'facebook') {
+    return `https://graph.facebook.com/${username}/picture?type=large`;
+  }
+};
 
-function init() {
+
+const getUserProfileUrl = (type, username) => `https://www.${type}.com/${username}`;
+
+
+const picker = {
+  async getAvatar(username) {
+    try {
+      const type = this.getNetworkType();
+      const imageUrl = type === 'vimeo' || type === 'instagram' ?
+        await this.avatarService.findImageUrl(getUserProfileUrl(type,username), type)
+        : getImageUrl(type, username);
+      return this.avatarService.getImage(imageUrl, type);
+    } catch (error) {
+      throw error;
+    }
+  },
+};
+
+
+module.exports.init = (type) => {
   const avatarService = avatarServiceFactory.init();
-  const twitterService = new TwitterServiceFactory(avatarService);
-  const instagramService = new InstagramServiceFactory(avatarService);
-  const tumblrService = new TumblrServiceFactory(avatarService);
-  const vimeoService = new VimeoServiceFactory(avatarService);
-  const facebookService = new FacebookServiceFactory(avatarService);
-
-  return ({
-    twitterService,
-    instagramService,
-    tumblrService,
-    vimeoService,
-    facebookService,
+  return Object.assign(Object.create(picker), {
+    getNetworkType() {
+      return type;
+    },
+    avatarService,
   });
-}
-
-module.exports.init = init;
+};
