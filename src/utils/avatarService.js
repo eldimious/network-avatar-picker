@@ -29,7 +29,7 @@ function init() {
     }
   };
 
-  const findImage = async function findImage(url, network) {
+  const findImageUrl = async function findImageUrl(url, network) {
     try {
       const response = await request.getAsync({ url, encoding: null });
       handleRequestErrors(response, network);
@@ -53,7 +53,7 @@ function init() {
 
   return Object.freeze({
     getImage,
-    findImage,
+    findImageUrl,
   });
 }
 

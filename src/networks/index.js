@@ -1,6 +1,6 @@
 const avatarServiceFactory = require('../utils/avatarService');
 
-const getUrl = (type, username) => {
+const getImageUrl = (type, username) => {
   if (type === 'twitter') {
     return `https://twitter.com/${username}/profile_image?size=original`;
   }
@@ -13,7 +13,7 @@ const getUrl = (type, username) => {
 };
 
 
-const getScrapUrl = (type, username) => `https://www.${type}.com/${username}`;
+const getUserProfileUrl = (type, username) => `https://www.${type}.com/${username}`;
 
 
 const picker = {
@@ -21,8 +21,8 @@ const picker = {
     try {
       const type = this.getNetworkType();
       const imageUrl = type === 'vimeo' || type === 'instagram' ?
-        await this.avatarService.findImage(getScrapUrl(type,username), type)
-        : getUrl(type, username);
+        await this.avatarService.findImageUrl(getUserProfileUrl(type,username), type)
+        : getImageUrl(type, username);
       return this.avatarService.getImage(imageUrl, type);
     } catch (error) {
       throw error;
