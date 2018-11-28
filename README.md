@@ -29,12 +29,14 @@ Use the methods of the `avatarPicker` class to get user avatars from networks:
 1) This way you will retrieve twitter's cnn account profile picture as buffer
 
 ```JavaScript
-avatarPicker.twitter.getAvatar('cnn')
-.then(buffer => {
-  /*code*/
-})
-.catch(error => {
-  /*code*/
-});
+const AvatarPickerService = require('network-avatar-picker');
+const avatarPicker = new AvatarPickerService();
+(async () => {
+    try {
+      const buffer = await avatarPicker.twitter.getAvatar('cnn');
+    } catch (e) {
+      // Deal with the fact the chain failed
+    }
+})();
 ```
 
