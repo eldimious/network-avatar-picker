@@ -22,7 +22,7 @@ Use the methods of the `avatarPicker` class to get user avatars from networks:
 - `avatarPicker.instagram.getAvatar(username)`
 - `avatarPicker.tumblr.getAvatar(username)`
 - `avatarPicker.vimeo.getAvatar(username)`
-- `avatarPicker.facebook.getAvatar(username)`
+- `avatarPicker.facebook.getAvatar(userId)` (you should send fb user id!)
 
 ## Example
 
