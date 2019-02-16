@@ -7,7 +7,10 @@ class NetworkAvatarPicker {
     this.tumblr = networks.init('tumblr');
     this.vimeo = networks.init('vimeo');
     this.facebook = networks.init('facebook');
+    if (new.target === NetworkAvatarPicker) {
+      Object.freeze(this);
+    }
   }
 }
 
-module.exports = Object.freeze(NetworkAvatarPicker);
+module.exports = NetworkAvatarPicker;
