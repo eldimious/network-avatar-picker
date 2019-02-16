@@ -5,6 +5,7 @@ const {
   handleRequestErrors,
 } = require('../utils/errorsService');
 
+
 function init() {
   const downloadImage = async function downloadImage(url, network) {
     try {
