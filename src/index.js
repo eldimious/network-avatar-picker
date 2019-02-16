@@ -10,4 +10,4 @@ class NetworkAvatarPicker {
   }
 }
 
-module.exports = NetworkAvatarPicker;
+module.exports = Object.freeze(NetworkAvatarPicker);

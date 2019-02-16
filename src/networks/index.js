@@ -1,4 +1,11 @@
+const cheerio = require('cheerio');
 const avatarServiceFactory = require('../utils/avatarService');
+const {
+  getPromisified,
+} = require('../utils/requestService');
+const {
+  handleRequestErrors,
+} = require('../utils/errorsService');
 
 const getImageUrl = (type, username) => {
   if (type === 'twitter') {
@@ -13,6 +20,29 @@ const getImageUrl = (type, username) => {
 };
 
 
+const extractImageUrl = async function extractImageUrl(url, network) {
+  try {
+    const response = await getPromisified({ url, encoding: null });
+    handleRequestErrors(response, network);
+    const $ = cheerio.load(response.body);
+    const meta = $('meta');
+    const keys = Object.keys(meta);
+    let ogImage;
+    keys.forEach((key) => {
+      if (meta[key].attribs && meta[key].attribs.property && meta[key].attribs.property === 'og:image') {
+        ogImage = meta[key].attribs.content;
+      }
+    });
+    if (!ogImage) {
+      throw new Error(`${network} get avatar image url not found.`);
+    }
+    return ogImage;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 const getUserProfileUrl = (type, username) => `https://www.${type}.com/${username}`;
 
 
@@ -20,10 +50,10 @@ const picker = {
   async getAvatar(username) {
     try {
       const type = this.getNetworkType();
-      const imageUrl = type === 'vimeo' || type === 'instagram' ?
-        await this.avatarService.findImageUrl(getUserProfileUrl(type,username), type)
+      const imageUrl = type === 'vimeo' || type === 'instagram'
+        ? await extractImageUrl(getUserProfileUrl(type, username), type)
         : getImageUrl(type, username);
-      return this.avatarService.getImage(imageUrl, type);
+      return this.avatarService.downloadImage(imageUrl, type);
     } catch (error) {
       throw error;
     }
