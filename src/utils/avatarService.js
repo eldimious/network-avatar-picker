@@ -1,12 +1,8 @@
-const Promise = require('bluebird');
+const util = require('util');
 const cheerio = require('cheerio');
-const request = require('request');
-Promise.promisifyAll(require('request'));
-
+const request = util.promisify(require('request'));
 
 function init() {
-  const createErrorMessage = (error, defaultMsg) => error && error.message ? error.message : defaultMsg;
-
   const handleRequestErrors = (response, network) => {
     if (response.statusCode !== 200) {
       throw Error(`Get ${network} avatar statusCode !== 200.`);
