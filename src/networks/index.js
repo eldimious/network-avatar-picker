@@ -1,5 +1,7 @@
 const cheerio = require('cheerio');
-const avatarServiceFactory = require('../utils/avatarService');
+const {
+  downloadImage,
+} = require('../utils/avatarService');
 const {
   getPromisified,
 } = require('../utils/requestService');
@@ -7,22 +9,26 @@ const {
   handleRequestErrors,
 } = require('../utils/errorsService');
 
-const getImageUrl = (type, username) => {
-  if (type === 'twitter') {
+const getImageUrl = (network, username) => {
+  if (network === 'twitter') {
     return `https://twitter.com/${username}/profile_image?size=original`;
-  }
-  if (type === 'tumblr') {
+  } else if (network === 'tumblr') {
     return `https://api.tumblr.com/v2/blog/${username}/avatar`;
-  }
-  if (type === 'facebook') {
+  } else if (network === 'facebook') {
     return `https://graph.facebook.com/${username}/picture?type=large`;
   }
+  throw new Error('Bad network');
 };
 
+const getUserProfileUrl = (network, username) => `https://www.${network}.com/${username}`;
 
-const extractImageUrl = async function extractImageUrl(url, network) {
+const extractProfileImageUrl = async function extractProfileImageUrl(network, username) {
   try {
-    const response = await getPromisified({ url, encoding: null });
+    if (!network || (network !== 'instagram' && network !== 'vimeo')) {
+      throw new Error('Bad network');
+    }
+    const profileUrl = getUserProfileUrl(network, username);
+    const response = await getPromisified({ url: profileUrl, encoding: null });
     handleRequestErrors(response, network);
     const $ = cheerio.load(response.body);
     const meta = $('meta');
@@ -42,31 +48,22 @@ const extractImageUrl = async function extractImageUrl(url, network) {
   }
 };
 
-
-const getUserProfileUrl = (type, username) => `https://www.${type}.com/${username}`;
-
-
 const picker = {
   async getAvatar(username) {
     try {
-      const type = this.getNetworkType();
-      const imageUrl = type === 'vimeo' || type === 'instagram'
-        ? await extractImageUrl(getUserProfileUrl(type, username), type)
-        : getImageUrl(type, username);
-      return this.avatarService.downloadImage(imageUrl, type);
+      const network = this.getNetworkType();
+      const imageUrl = network === 'vimeo' || network === 'instagram'
+        ? await extractProfileImageUrl(network, username)
+        : getImageUrl(network, username);
+      return downloadImage(imageUrl, network);
     } catch (error) {
       throw error;
     }
   },
 };
 
-
-module.exports.init = (type) => {
-  const avatarService = avatarServiceFactory.init();
-  return Object.assign(Object.create(picker), {
-    getNetworkType() {
-      return type;
-    },
-    avatarService,
-  });
-};
+module.exports.init = type => Object.assign(Object.create(picker), {
+  getNetworkType() {
+    return type;
+  },
+});
