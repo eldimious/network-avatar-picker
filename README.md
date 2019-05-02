@@ -10,6 +10,7 @@
 - tumblr
 - twitter
 - vimeo
+- youtube
 
 ## Usage
 
@@ -33,6 +34,7 @@ Use the methods of the `avatarPicker` class to get user avatars from networks:
 - `avatarPicker.vimeo.getAvatar(username)`
 - `avatarPicker.facebook.getAvatar(username)`
 - `avatarPicker.github.getAvatar(username)`
+- `avatarPicker.youtube.getAvatar(username)`
 
 
 ## Example
