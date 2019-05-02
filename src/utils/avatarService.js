@@ -6,23 +6,23 @@ const {
   handleRequestErrors,
 } = require('../utils/errorsService');
 
-const downloadImage = async function downloadImage(url, network) {
+const downloadImage = async function downloadImage(url, provider) {
   try {
     const response = await getPromisified({ url, encoding: null });
-    handleRequestErrors(response, network);
+    handleRequestErrors(response, provider);
     return response.body;
   } catch (error) {
     throw error;
   }
 };
 
-const extractProfileImageUrl = async function extractProfileImageUrl(network, profileUrl) {
+const extractProfileImageUrl = async function extractProfileImageUrl(provider, profileUrl) {
   try {
-    if (!network || (network !== 'instagram' && network !== 'vimeo')) {
-      throw new Error('Bad network');
+    if (!provider || (provider !== 'instagram' && provider !== 'vimeo')) {
+      throw new Error('Bad provider');
     }
     const response = await getPromisified({ url: profileUrl, encoding: null });
-    handleRequestErrors(response, network);
+    handleRequestErrors(response, provider);
     const $ = cheerio.load(response.body);
     const meta = $('meta');
     const keys = Object.keys(meta);
@@ -33,7 +33,7 @@ const extractProfileImageUrl = async function extractProfileImageUrl(network, pr
       }
     });
     if (!ogImage) {
-      throw new Error(`${network} get avatar image url not found.`);
+      throw new Error(`${provider} get avatar image url not found.`);
     }
     return ogImage;
   } catch (error) {
