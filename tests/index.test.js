@@ -81,5 +81,14 @@ describe('authentication module tests', () => {
       expect(Buffer.from(vimeoProfileImage).toString('base64')).to.equal(profileImages.vimeo.imageBase64);
       expect(Buffer.from(youtubeProfileImage).toString('base64')).to.equal(profileImages.youtube.imageBase64);
     });
+    it('should return throw error missing username', async () => {
+      await expect(avatarPicker.facebook.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
+      await expect(avatarPicker.github.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
+      await expect(avatarPicker.instagram.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
+      await expect(avatarPicker.tumblr.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
+      await expect(avatarPicker.twitter.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
+      await expect(avatarPicker.vimeo.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
+      await expect(avatarPicker.youtube.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
+    });
   });
 });
