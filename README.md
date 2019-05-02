@@ -1,6 +1,6 @@
 # network-avatar-picker
 
-> A npm module that returns as buffer a user's social network profile picture. You can choose among twitter, instagram, tumblr, vimeo and facebook and just send a username.
+> A npm module that returns a user's social network profile picture. You can choose among twitter, instagram, tumblr, vimeo facebook, github and youtube and just pass the username.
 
 
 [![Build Status](https://travis-ci.org/eldimious/network-avatar-picker.svg?branch=master)](https://travis-ci.org/eldimious/network-avatar-picker) [![Coverage Status](https://coveralls.io/repos/github/eldimious/network-avatar-picker/badge.svg?branch=master)](https://coveralls.io/github/eldimious/network-avatar-picker?branch=master)
@@ -39,17 +39,38 @@ Use the methods of the `avatarPicker` class to get user avatars from networks:
 - `avatarPicker.github.getAvatar(username)`
 - `avatarPicker.youtube.getAvatar(username)`
 
-
 ## Example
 
-1) This way you will retrieve twitter's cnn account profile picture as buffer
+1) This way you will retrieve **twitter's** cnn user profile picture:
 
 ```JavaScript
-const AvatarPickerService = require('network-avatar-picker');
-const avatarPicker = new AvatarPickerService();
 (async () => {
     try {
-      const buffer = await avatarPicker.twitter.getAvatar('cnn');
+      const res = await avatarPicker.twitter.getAvatar('cnn');
+    } catch (e) {
+      // Deal with the fact the chain failed
+    }
+})();
+```
+
+2) This way you will retrieve **facebook's** zuck user profile picture:
+
+```JavaScript
+(async () => {
+    try {
+      const res = await avatarPicker.facebook.getAvatar('zuck');
+    } catch (e) {
+      // Deal with the fact the chain failed
+    }
+})();
+```
+
+3) This way you will retrieve **instagram's** cnn user profile picture:
+
+```JavaScript
+(async () => {
+    try {
+      const res = await avatarPicker.instagram.getAvatar('cnn');
     } catch (e) {
       // Deal with the fact the chain failed
     }
