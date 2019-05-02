@@ -2,6 +2,15 @@
 
 > A npm module that returns as buffer a user's social network profile picture. This way, you can handle buffers and store them as images in your DB. You can choose among twitter, instagram, tumblr, vimeo and facebook and just send a username.
 
+## Supported Providers
+
+- facebook
+- github
+- instagram
+- tumblr
+- twitter
+- vimeo
+
 ## Usage
 
 First, install `network-avatar-picker` as a dependency:
@@ -22,7 +31,9 @@ Use the methods of the `avatarPicker` class to get user avatars from networks:
 - `avatarPicker.instagram.getAvatar(username)`
 - `avatarPicker.tumblr.getAvatar(username)`
 - `avatarPicker.vimeo.getAvatar(username)`
-- `avatarPicker.facebook.getAvatar(userId)` (you should send fb user id!)
+- `avatarPicker.facebook.getAvatar(username)`
+- `avatarPicker.github.getAvatar(username)`
+
 
 ## Example
 
@@ -39,4 +50,3 @@ const avatarPicker = new AvatarPickerService();
     }
 })();
 ```
-
