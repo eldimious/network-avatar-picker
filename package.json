@@ -5,7 +5,10 @@
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "./node_modules/.bin/babel -d lib src/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precoveralls": "npm run coverage",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "tests": "nyc mocha tests --recursive --timeout 15000"
   },
   "repository": {
     "type": "git",
@@ -18,8 +21,15 @@
   },
   "homepage": "https://github.com/eldimious/network-avatar-picker#readme",
   "dependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "cheerio": "^1.0.0-rc.2",
-    "request": "^2.82.0"
+    "coveralls": "^3.0.3",
+    "mocha": "^6.1.4",
+    "nyc": "^14.0.0",
+    "request": "^2.82.0",
+    "sinon": "^7.3.2",
+    "supertest": "^4.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
