@@ -1,11 +1,6 @@
 const {
-  getPromisified,
-} = require('../utils/requestService');
-const {
-  handleRequestErrors,
-} = require('../utils/errorsService');
-const {
   extractProfileImageUrl,
+  downloadImage,
 } = require('../utils/avatarService');
 
 const instagramProvider = {
@@ -13,17 +8,8 @@ const instagramProvider = {
     return `https://www.instagram.com/${username}`;
   },
   async getAvatar(username) {
-    try {
-      const profileImageUrl = await extractProfileImageUrl('instagram', this.getUrl(username));
-      const response = await getPromisified({
-        url: profileImageUrl,
-        encoding: null,
-      });
-      handleRequestErrors(response, 'instagram');
-      return response.body;
-    } catch (error) {
-      throw error;
-    }
+    const profileImageUrl = await extractProfileImageUrl('instagram', this.getUrl(username));
+    return downloadImage(profileImageUrl, 'instagram');
   },
 };
 
