@@ -2,6 +2,9 @@
 
 > A npm module that returns as buffer a user's social network profile picture. This way, you can handle buffers and store them as images in your DB. You can choose among twitter, instagram, tumblr, vimeo and facebook and just send a username.
 
+
+[![Build Status](https://travis-ci.org/eldimious/network-avatar-picker.svg?branch=master)](https://travis-ci.org/eldimious/network-avatar-picker) [![Coverage Status](https://coveralls.io/repos/github/eldimious/network-avatar-picker/badge.svg?branch=master)](https://coveralls.io/github/eldimious/network-avatar-picker?branch=master)
+
 ## Supported Providers
 
 - facebook
