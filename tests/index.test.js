@@ -1,6 +1,7 @@
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const AvatarPickerService = require('../src');
+const profileImages = require('./mockedData/profileImages');
 
 chai.use(chaiAsPromised);
 const {
@@ -53,6 +54,32 @@ describe('authentication module tests', () => {
       expect(avatarPicker.twitter.getUrl('el_dimious')).to.equal('https://twitter.com/el_dimious/profile_image?size=original');
       expect(avatarPicker.vimeo.getUrl('cnn')).to.equal('https://www.vimeo.com/cnn');
       expect(avatarPicker.youtube.getUrl('cnn')).to.equal('https://www.youtube.com/user/cnn');
+    });
+    it('should return image for each provider', async () => {
+      const [
+        fbProfileImage,
+        githubProfileImage,
+        instagramProfileImage,
+        tumblrProfileImage,
+        twitterProfileImage,
+        vimeoProfileImage,
+        youtubeProfileImage,
+      ] = await Promise.all([
+        avatarPicker.facebook.getAvatar('zuck'),
+        avatarPicker.github.getAvatar('eldimious'),
+        avatarPicker.instagram.getAvatar('cnn'),
+        avatarPicker.tumblr.getAvatar('tumblr'),
+        avatarPicker.twitter.getAvatar('el_dimious'),
+        avatarPicker.vimeo.getAvatar('cnn'),
+        avatarPicker.youtube.getAvatar('cnn'),
+      ]);
+      expect(Buffer.from(fbProfileImage).toString('base64')).to.equal(profileImages.facebook.imageBase64);
+      expect(Buffer.from(githubProfileImage).toString('base64')).to.equal(profileImages.github.imageBase64);
+      expect(Buffer.from(instagramProfileImage).toString('base64')).to.equal(profileImages.instagram.imageBase64);
+      expect(Buffer.from(tumblrProfileImage).toString('base64')).to.equal(profileImages.tumblr.imageBase64);
+      expect(Buffer.from(twitterProfileImage).toString('base64')).to.equal(profileImages.twitter.imageBase64);
+      expect(Buffer.from(vimeoProfileImage).toString('base64')).to.equal(profileImages.vimeo.imageBase64);
+      expect(Buffer.from(youtubeProfileImage).toString('base64')).to.equal(profileImages.youtube.imageBase64);
     });
   });
 });
