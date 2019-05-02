@@ -1,12 +1,18 @@
-const networks = require('./networks');
+const facebook = require('./providers/facebook');
+const github = require('./providers/github');
+const instagram = require('./providers/instagram');
+const tumblr = require('./providers/tumblr');
+const twitter = require('./providers/twitter');
+const vimeo = require('./providers/vimeo');
 
 class NetworkAvatarPicker {
   constructor() {
-    this.twitter = networks.init('twitter');
-    this.instagram = networks.init('instagram');
-    this.tumblr = networks.init('tumblr');
-    this.vimeo = networks.init('vimeo');
-    this.facebook = networks.init('facebook');
+    this.facebook = facebook.init();
+    this.github = github.init();
+    this.instagram = instagram.init();
+    this.tumblr = tumblr.init();
+    this.twitter = twitter.init('twitter');
+    this.vimeo = vimeo.init('vimeo');
     if (new.target === NetworkAvatarPicker) {
       Object.freeze(this);
     }
