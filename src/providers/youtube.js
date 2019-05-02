@@ -12,7 +12,7 @@ const youtubeProvider = {
   },
   async getAvatar(username) {
     validateUsernameInput(username);
-    const profileImageUrl = await extractProfileImageUrl('youtube', this.getUrl(username));
+    const profileImageUrl = await extractProfileImageUrl(this.getUrl(username), 'youtube');
     return downloadImage(profileImageUrl, 'youtube');
   },
 };

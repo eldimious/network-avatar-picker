@@ -12,7 +12,7 @@ const instagramProvider = {
   },
   async getAvatar(username) {
     validateUsernameInput(username);
-    const profileImageUrl = await extractProfileImageUrl('instagram', this.getUrl(username));
+    const profileImageUrl = await extractProfileImageUrl(this.getUrl(username), 'instagram');
     return downloadImage(profileImageUrl, 'instagram');
   },
 };

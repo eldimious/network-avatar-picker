@@ -12,7 +12,7 @@ const vimeoProvider = {
   },
   async getAvatar(username) {
     validateUsernameInput(username);
-    const profileImageUrl = await extractProfileImageUrl('vimeo', this.getUrl(username));
+    const profileImageUrl = await extractProfileImageUrl(this.getUrl(username), 'vimeo');
     return downloadImage(profileImageUrl, 'vimeo');
   },
 };

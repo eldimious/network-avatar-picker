@@ -16,7 +16,7 @@ const downloadImage = async function downloadImage(url, provider) {
   }
 };
 
-const extractProfileImageUrl = async function extractProfileImageUrl(provider, profileUrl) {
+const extractProfileImageUrl = async function extractProfileImageUrl(profileUrl, provider) {
   try {
     if (!provider) {
       throw new Error('Bad provider');

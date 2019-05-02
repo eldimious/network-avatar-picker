@@ -12,7 +12,7 @@ const facebookProvider = {
   },
   async getAvatar(username) {
     validateUsernameInput(username);
-    const profileImageUrl = await extractProfileImageUrl('facebook', this.getUrl(username));
+    const profileImageUrl = await extractProfileImageUrl(this.getUrl(username), 'facebook');
     return downloadImage(profileImageUrl, 'facebook');
   },
 };
