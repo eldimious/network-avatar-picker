@@ -4,6 +4,7 @@ const instagram = require('./providers/instagram');
 const tumblr = require('./providers/tumblr');
 const twitter = require('./providers/twitter');
 const vimeo = require('./providers/vimeo');
+const youtube = require('./providers/youtube');
 
 class NetworkAvatarPicker {
   constructor() {
@@ -11,8 +12,9 @@ class NetworkAvatarPicker {
     this.github = github.init();
     this.instagram = instagram.init();
     this.tumblr = tumblr.init();
-    this.twitter = twitter.init('twitter');
-    this.vimeo = vimeo.init('vimeo');
+    this.twitter = twitter.init();
+    this.vimeo = vimeo.init();
+    this.youtube = youtube.init();
     if (new.target === NetworkAvatarPicker) {
       Object.freeze(this);
     }
