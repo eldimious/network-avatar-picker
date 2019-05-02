@@ -10,7 +10,7 @@ const {
 
 let avatarPicker;
 
-describe('authentication module tests', () => {
+describe('avatar picker module tests', () => {
   beforeEach(() => {
     avatarPicker = new AvatarPickerService();
   });
