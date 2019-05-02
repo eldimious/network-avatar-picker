@@ -2,13 +2,17 @@ const {
   extractProfileImageUrl,
   downloadImage,
 } = require('../utils/avatarService');
+const {
+  validateUsernameInput,
+} = require('../utils/validationService');
 
 const youtubeProvider = {
   getUrl(username) {
     return `https://www.youtube.com/user/${username}`;
   },
   async getAvatar(username) {
-    const profileImageUrl = await extractProfileImageUrl('youtube', this.getUrl(username));
+    validateUsernameInput(username);
+    const profileImageUrl = await extractProfileImageUrl(this.getUrl(username), 'youtube');
     return downloadImage(profileImageUrl, 'youtube');
   },
 };

@@ -1,4 +1,4 @@
-const handleRequestErrors = (response, provider) => {
+function handleRequestErrors(response, provider) {
   if (response.statusCode !== 200) {
     throw new Error(`Get ${provider} avatar failed with status: ${response.statusCode}.`);
   }
@@ -8,7 +8,7 @@ const handleRequestErrors = (response, provider) => {
   if (provider === 'twitter' && response.headers && response.headers['content-type'] && response.headers['content-type'].includes('text/html')) {
     throw new Error(`Get ${provider} avatar no response body.`);
   }
-};
+}
 
 
 module.exports = {
