@@ -18,7 +18,7 @@ jspm_packages
 
 lib
 index.js
-coveralls.yml
+.coveralls.yml
 # Coverage directory used by tools like istanbul
 coverage
 .nyc_output/
