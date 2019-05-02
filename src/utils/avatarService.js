@@ -18,20 +18,19 @@ const downloadImage = async function downloadImage(url, provider) {
 
 const extractProfileImageUrl = async function extractProfileImageUrl(provider, profileUrl) {
   try {
-    if (!provider || (provider !== 'instagram' && provider !== 'vimeo')) {
+    if (!provider) {
       throw new Error('Bad provider');
     }
-    const response = await getPromisified({ url: profileUrl, encoding: null });
+    const response = await getPromisified({
+      url: profileUrl,
+      headers: {
+        'User-Agent': 'request',
+      },
+      encoding: null,
+    });
     handleRequestErrors(response, provider);
     const $ = cheerio.load(response.body);
-    const meta = $('meta');
-    const keys = Object.keys(meta);
-    let ogImage;
-    keys.forEach((key) => {
-      if (meta[key].attribs && meta[key].attribs.property && meta[key].attribs.property === 'og:image') {
-        ogImage = meta[key].attribs.content;
-      }
-    });
+    const ogImage = $('meta[property="og:image"]').attr('content');
     if (!ogImage) {
       throw new Error(`${provider} get avatar image url not found.`);
     }
@@ -40,7 +39,6 @@ const extractProfileImageUrl = async function extractProfileImageUrl(provider, p
     throw error;
   }
 };
-
 
 module.exports = {
   extractProfileImageUrl,
