@@ -30,7 +30,7 @@ const AvatarPickerService = require('network-avatar-picker');
 const avatarPicker = new AvatarPickerService();
 ```
 
-Use the methods of the `avatarPicker` class to get user avatars from networks:
+Use the methods of the `avatarPicker` instance to get user avatars:
 - `avatarPicker.twitter.getAvatar(username)`
 - `avatarPicker.instagram.getAvatar(username)`
 - `avatarPicker.tumblr.getAvatar(username)`
