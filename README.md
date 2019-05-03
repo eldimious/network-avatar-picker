@@ -1,19 +1,19 @@
 # network-avatar-picker
 
-> A npm module that returns a user's social network profile picture. You can choose among twitter, instagram, tumblr, vimeo facebook, github and youtube. You just need to pass a username **without the need of token or API keys**!
+> A npm module that returns a user's avatar from his social networks. You can choose among Facebook, Twitter, Instagram, Tumblr, Vimeo, Github and Youtube. Then, you just need to pass a username **without the need of token or API keys** and retrieve user's social network profile picture!
 
 
 [![npm version](https://badge.fury.io/js/network-avatar-picker.svg)](https://badge.fury.io/js/network-avatar-picker) [![Build Status](https://travis-ci.org/eldimious/network-avatar-picker.svg?branch=master)](https://travis-ci.org/eldimious/network-avatar-picker) [![Coverage Status](https://coveralls.io/repos/github/eldimious/network-avatar-picker/badge.svg?branch=master)](https://coveralls.io/github/eldimious/network-avatar-picker?branch=master)
 
 ## Supported Providers
 
-- facebook
-- github
-- instagram
-- tumblr
-- twitter
-- vimeo
-- youtube
+- Facebook
+- Github
+- Instagram
+- Tumblr
+- Twitter
+- Vimeo
+- Youtube
 
 ## Usage
 
