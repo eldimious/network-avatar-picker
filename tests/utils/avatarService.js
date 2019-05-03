@@ -34,8 +34,8 @@ describe('test avatar service', () => {
         avatarService.extractProfileImageUrl('https://www.vimeo.com/cnn', 'vimeo'),
         avatarService.extractProfileImageUrl('https://www.youtube.com/user/cnn', 'youtube'),
       ]);
-      expect(instagramProfileUrl).to.equal(profileImages.instagram.profileImageUrl);
-      expect(facebookProfileUrl).to.equal(profileImages.facebook.profileImageUrl);
+      expect(instagramProfileUrl.split('?')[0]).to.equal(profileImages.instagram.profileImageUrl);
+      expect(facebookProfileUrl.split('?')[0]).to.equal(profileImages.facebook.profileImageUrl);
       expect(vimeoProfileUrl).to.equal(profileImages.vimeo.profileImageUrl);
       expect(youtubeProfileUrl).to.equal(profileImages.youtube.profileImageUrl);
     });

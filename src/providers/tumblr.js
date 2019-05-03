@@ -4,14 +4,18 @@ const {
 const {
   validateUsernameInput,
 } = require('../utils/validationService');
+const {
+  TUMBLR,
+} = require('../utils/common');
 
 const tumblrProvider = {
-  getUrl(username) {
+  async getAvatarUrl(username) {
+    validateUsernameInput(username);
     return `https://api.tumblr.com/v2/blog/${username}/avatar`;
   },
   async getAvatar(username) {
-    validateUsernameInput(username);
-    return downloadImage(this.getUrl(username), 'tumblr');
+    const profileImageUrl = await this.getAvatarUrl(username);
+    return downloadImage(profileImageUrl, TUMBLR);
   },
 };
 

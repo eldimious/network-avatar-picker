@@ -4,14 +4,18 @@ const {
 const {
   validateUsernameInput,
 } = require('../utils/validationService');
+const {
+  GITHUB,
+} = require('../utils/common');
 
 const githubProvider = {
-  getUrl(username) {
+  async getAvatarUrl(username) {
+    validateUsernameInput(username);
     return `https://github.com/${username}.png`;
   },
   async getAvatar(username) {
-    validateUsernameInput(username);
-    return downloadImage(this.getUrl(username), 'github');
+    const profileImageUrl = await this.getAvatarUrl(username);
+    return downloadImage(profileImageUrl, GITHUB);
   },
 };
 

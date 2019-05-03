@@ -5,16 +5,24 @@ const {
 const {
   validateUsernameInput,
 } = require('../utils/validationService');
+const {
+  INSTAGRAM,
+} = require('../utils/common');
+
+function getUserProfileUrl(username) {
+  return `https://www.instagram.com/${username}`;
+}
 
 const instagramProvider = {
-  getUrl(username) {
-    return `https://www.instagram.com/${username}`;
+  async getAvatarUrl(username) {
+    validateUsernameInput(username);
+    return extractProfileImageUrl(getUserProfileUrl(username), INSTAGRAM);
   },
   async getAvatar(username) {
-    validateUsernameInput(username);
-    const profileImageUrl = await extractProfileImageUrl(this.getUrl(username), 'instagram');
-    return downloadImage(profileImageUrl, 'instagram');
+    const profileImageUrl = await this.getAvatarUrl(username);
+    return downloadImage(profileImageUrl, INSTAGRAM);
   },
 };
+
 
 module.exports.init = () => Object.assign(Object.create(instagramProvider));

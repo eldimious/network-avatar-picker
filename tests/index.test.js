@@ -37,23 +37,40 @@ describe('avatar picker module tests', () => {
       expect(typeof(avatarPicker.vimeo.getAvatar)).to.eql('function');
       expect(typeof(avatarPicker.youtube.getAvatar)).to.eql('function');
     });
-    it('should each supported methods has getUrl as method', () => {
-      expect(typeof(avatarPicker.facebook.getUrl)).to.eql('function');
-      expect(typeof(avatarPicker.github.getUrl)).to.eql('function');
-      expect(typeof(avatarPicker.instagram.getUrl)).to.eql('function');
-      expect(typeof(avatarPicker.tumblr.getUrl)).to.eql('function');
-      expect(typeof(avatarPicker.twitter.getUrl)).to.eql('function');
-      expect(typeof(avatarPicker.vimeo.getUrl)).to.eql('function');
-      expect(typeof(avatarPicker.youtube.getUrl)).to.eql('function');
+    it('should each supported methods has getAvatarUrl as method', () => {
+      expect(typeof(avatarPicker.facebook.getAvatarUrl)).to.eql('function');
+      expect(typeof(avatarPicker.github.getAvatarUrl)).to.eql('function');
+      expect(typeof(avatarPicker.instagram.getAvatarUrl)).to.eql('function');
+      expect(typeof(avatarPicker.tumblr.getAvatarUrl)).to.eql('function');
+      expect(typeof(avatarPicker.twitter.getAvatarUrl)).to.eql('function');
+      expect(typeof(avatarPicker.vimeo.getAvatarUrl)).to.eql('function');
+      expect(typeof(avatarPicker.youtube.getAvatarUrl)).to.eql('function');
     });
     it('should return correct url for each provider', async () => {
-      expect(avatarPicker.facebook.getUrl('zuck')).to.equal('https://mobile.facebook.com/zuck');
-      expect(avatarPicker.github.getUrl('eldimious')).to.equal('https://github.com/eldimious.png');
-      expect(avatarPicker.instagram.getUrl('cnn')).to.equal('https://www.instagram.com/cnn');
-      expect(avatarPicker.tumblr.getUrl('tumblr')).to.equal('https://api.tumblr.com/v2/blog/tumblr/avatar');
-      expect(avatarPicker.twitter.getUrl('el_dimious')).to.equal('https://twitter.com/el_dimious/profile_image?size=original');
-      expect(avatarPicker.vimeo.getUrl('cnn')).to.equal('https://www.vimeo.com/cnn');
-      expect(avatarPicker.youtube.getUrl('cnn')).to.equal('https://www.youtube.com/user/cnn');
+      const [
+        fbProfileImageUrl,
+        githubProfileImageUrl,
+        instagramProfileImageUrl,
+        tumblrProfileImageUrl,
+        twitterProfileImageUrl,
+        vimeoProfileImageUrl,
+        youtubeProfileImageUrl,
+      ] = await Promise.all([
+        avatarPicker.facebook.getAvatarUrl('zuck'),
+        avatarPicker.github.getAvatarUrl('eldimious'),
+        avatarPicker.instagram.getAvatarUrl('cnn'),
+        avatarPicker.tumblr.getAvatarUrl('tumblr'),
+        avatarPicker.twitter.getAvatarUrl('el_dimious'),
+        avatarPicker.vimeo.getAvatarUrl('cnn'),
+        avatarPicker.youtube.getAvatarUrl('cnn'),
+      ]);
+      expect(fbProfileImageUrl.split('?')[0]).to.equal(profileImages.facebook.profileImageUrl);
+      expect(githubProfileImageUrl).to.equal(profileImages.github.profileImageUrl);
+      expect(instagramProfileImageUrl.split('?')[0]).to.equal(profileImages.instagram.profileImageUrl);
+      expect(tumblrProfileImageUrl).to.equal(profileImages.tumblr.profileImageUrl);
+      expect(twitterProfileImageUrl).to.equal(profileImages.twitter.profileImageUrl);
+      expect(vimeoProfileImageUrl).to.equal(profileImages.vimeo.profileImageUrl);
+      expect(youtubeProfileImageUrl).to.equal(profileImages.youtube.profileImageUrl);
     });
     it('should return image for each provider', async () => {
       const [

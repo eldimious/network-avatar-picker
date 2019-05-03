@@ -5,16 +5,24 @@ const {
 const {
   validateUsernameInput,
 } = require('../utils/validationService');
+const {
+  FACEBOOK,
+} = require('../utils/common');
+
+function getUserProfileUrl(username) {
+  return `https://mobile.facebook.com/${username}`;
+}
 
 const facebookProvider = {
-  getUrl(username) {
-    return `https://mobile.facebook.com/${username}`;
+  async getAvatarUrl(username) {
+    validateUsernameInput(username);
+    return extractProfileImageUrl(getUserProfileUrl(username), FACEBOOK);
   },
   async getAvatar(username) {
-    validateUsernameInput(username);
-    const profileImageUrl = await extractProfileImageUrl(this.getUrl(username), 'facebook');
-    return downloadImage(profileImageUrl, 'facebook');
+    const profileImageUrl = await this.getAvatarUrl(username);
+    return downloadImage(profileImageUrl, FACEBOOK);
   },
 };
+
 
 module.exports.init = () => Object.assign(Object.create(facebookProvider));
