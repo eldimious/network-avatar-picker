@@ -4,14 +4,18 @@ const {
 const {
   validateUsernameInput,
 } = require('../utils/validationService');
+const {
+  TWITTER,
+} = require('../utils/common');
 
 const twitterProvider = {
-  getUrl(username) {
+  async getAvatarUrl(username) {
+    validateUsernameInput(username);
     return `https://twitter.com/${username}/profile_image?size=original`;
   },
   async getAvatar(username) {
-    validateUsernameInput(username);
-    return downloadImage(this.getUrl(username), 'twitter');
+    const profileImageUrl = await this.getAvatarUrl(username);
+    return downloadImage(profileImageUrl, TWITTER);
   },
 };
 
