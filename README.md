@@ -35,11 +35,11 @@ const AvatarPickerService = require('network-avatar-picker');
 const avatarPicker = new AvatarPickerService();
 ```
 
-### Supported Methods
+### Methods
 
-Use the `async` methods of the `avatarPicker` instance to get user avatars:
+Use the `async` methods of the `avatarPicker` instance to fetch user avatars:
 
-a) `getAvatar`: **Fetch avatar image as Buffer**
+A) **getAvatar**: Fetch avatar image as **Buffer**
 
 - `avatarPicker.facebook.getAvatar(username)`
 - `avatarPicker.twitter.getAvatar(username)`
@@ -50,7 +50,7 @@ a) `getAvatar`: **Fetch avatar image as Buffer**
 - `avatarPicker.youtube.getAvatar(username)`
 - `avatarPicker.gmail.getAvatar(email)`
 
-b) `getAvatarUrl`: **Fetch avatar image as URL**
+B) **getAvatarUrl**: Fetch avatar image as **URL**
 
 - `avatarPicker.facebook.getAvatarUrl(username)`
 - `avatarPicker.twitter.getAvatarUrl(username)`
