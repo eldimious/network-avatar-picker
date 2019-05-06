@@ -2,7 +2,7 @@ const {
   downloadImage,
 } = require('../utils/avatarService');
 const {
-  validateUsernameInput,
+  validateGmail,
 } = require('../utils/validationService');
 const {
   md5,
@@ -11,7 +11,7 @@ const {
 
 const gmailProvider = {
   async getAvatarUrl(username) {
-    validateUsernameInput(username);
+    validateGmail(username);
     return `https://gravatar.com/avatar/${md5(username)}?size=500`;
   },
   async getAvatar(username) {

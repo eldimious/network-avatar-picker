@@ -8,6 +8,7 @@ const TWITTER = 'twitter';
 const VIMEO = 'vimeo';
 const YOUTUBE = 'youtube';
 const GMAIL = 'gmail';
+const GRAVATAR = 'gravatar';
 
 const md5 = input =>
   crypto
@@ -24,5 +25,6 @@ module.exports = {
   VIMEO,
   YOUTUBE,
   GMAIL,
+  GRAVATAR,
   md5,
 };
