@@ -1,5 +1,6 @@
 const facebook = require('./providers/facebook');
 const github = require('./providers/github');
+const gmail = require('./providers/gmail');
 const instagram = require('./providers/instagram');
 const tumblr = require('./providers/tumblr');
 const twitter = require('./providers/twitter');
@@ -10,6 +11,7 @@ class NetworkAvatarPicker {
   constructor() {
     this.facebook = facebook.init();
     this.github = github.init();
+    this.gmail = gmail.init();
     this.instagram = instagram.init();
     this.tumblr = tumblr.init();
     this.twitter = twitter.init();
