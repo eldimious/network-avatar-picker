@@ -35,18 +35,18 @@ describe('validation service', () => {
     });
   });
   describe('test validateUsernameInput method', () => {
-    it('should throw error - required username', async () => {
+    it('should throw error - required username', () => {
       expect(() => validationService.validateUsernameInput()).to.throw('Username required as input');
     });
-    it('should throw error - username as string', async () => {
+    it('should throw error - username as string', () => {
       expect(() => validationService.validateUsernameInput(1)).to.throw('Add username as string');
     });
   });
   describe('test validateGmail method', () => {
-    it('should throw error - required gmail', async () => {
+    it('should throw error - required gmail', () => {
       expect(() => validationService.validateGmail()).to.throw('Gmail required as input');
     });
-    it('should throw error - add valid gmail', async () => {
+    it('should throw error - add valid gmail', () => {
       expect(() => validationService.validateGmail('test@hotmail.com')).to.throw('Add a valid gmail');
     });
   });
