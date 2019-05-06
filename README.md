@@ -1,6 +1,6 @@
 # network-avatar-picker
 
-> A npm module that returns a user's avatar from his social networks as Buffer or as URL. You can choose among Facebook, Twitter, Instagram, Tumblr, Vimeo, Github and Youtube provider. Then, you just need to pass a username **without the need of token or API keys** and retrieve user's social network profile picture!
+> A npm module that returns a user's avatar from his social networks as Buffer or as URL. You can choose among Facebook, Twitter, Instagram, Tumblr, Vimeo, Github, Gmail and Youtube provider. Then, you just need to pass a username **without the need of token or API keys** and retrieve user's social network profile picture!
 
 
 [![npm version](https://badge.fury.io/js/network-avatar-picker.svg)](https://badge.fury.io/js/network-avatar-picker) [![Build Status](https://travis-ci.org/eldimious/network-avatar-picker.svg?branch=master)](https://travis-ci.org/eldimious/network-avatar-picker) [![Coverage Status](https://coveralls.io/repos/github/eldimious/network-avatar-picker/badge.svg?branch=master)](https://coveralls.io/github/eldimious/network-avatar-picker?branch=master)
@@ -9,6 +9,7 @@
 
 - Facebook
 - Github
+- Gmail
 - Instagram
 - Tumblr
 - Twitter
@@ -33,23 +34,26 @@ const avatarPicker = new AvatarPickerService();
 Use the `async` methods of the `avatarPicker` instance to get user avatars:
 
 **Get avatar as Buffer:**
+
+- `avatarPicker.facebook.getAvatar(username)`
 - `avatarPicker.twitter.getAvatar(username)`
 - `avatarPicker.instagram.getAvatar(username)`
 - `avatarPicker.tumblr.getAvatar(username)`
 - `avatarPicker.vimeo.getAvatar(username)`
-- `avatarPicker.facebook.getAvatar(username)`
 - `avatarPicker.github.getAvatar(username)`
 - `avatarPicker.youtube.getAvatar(username)`
+- `avatarPicker.gmail.getAvatar(email)`
 
 **Get avatar as URL:**
 
+- `avatarPicker.facebook.getAvatarUrl(username)`
 - `avatarPicker.twitter.getAvatarUrl(username)`
 - `avatarPicker.instagram.getAvatarUrl(username)`
 - `avatarPicker.tumblr.getAvatarUrl(username)`
 - `avatarPicker.vimeo.getAvatarUrl(username)`
-- `avatarPicker.facebook.getAvatarUrl(username)`
 - `avatarPicker.github.getAvatarUrl(username)`
 - `avatarPicker.youtube.getAvatarUrl(username)`
+- `avatarPicker.gmail.getAvatarUrl(email)`
 
 
 ## Example
