@@ -34,8 +34,20 @@ describe('test avatar service', () => {
         avatarService.extractProfileImageUrl('https://www.vimeo.com/cnn', 'vimeo'),
         avatarService.extractProfileImageUrl('https://www.youtube.com/user/cnn', 'youtube'),
       ]);
-      expect(instagramProfileUrl.split('?')[0]).to.equal(profileImages.instagram.profileImageUrl);
-      expect(facebookProfileUrl.split('?')[0]).to.equal(profileImages.facebook.profileImageUrl);
+      expect(instagramProfileUrl
+        .split('?')[0]
+        .split('cdninstagram.com/')[1]
+        .split('.jpg')[0]
+        .split('/')
+        .pop()
+      ).to.equal(profileImages.instagram.profileImageUrl);
+      expect(facebookProfileUrl
+        .split('?')[0]
+        .split('fbcdn.net/')[1]
+        .split('.jpg')[0]
+        .split('/')
+        .pop()
+      ).to.equal(profileImages.facebook.profileImageUrl);
       expect(vimeoProfileUrl).to.equal(profileImages.vimeo.profileImageUrl);
       expect(youtubeProfileUrl).to.equal(profileImages.youtube.profileImageUrl);
     });

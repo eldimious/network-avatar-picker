@@ -22,6 +22,7 @@ describe('avatar picker module tests', () => {
     it('should avatarPicker has as properties supported methods', () => {
       expect(avatarPicker.facebook).to.be.an('object');
       expect(avatarPicker.github).to.be.an('object');
+      expect(avatarPicker.gmail).to.be.an('object');
       expect(avatarPicker.instagram).to.be.an('object');
       expect(avatarPicker.tumblr).to.be.an('object');
       expect(avatarPicker.twitter).to.be.an('object');
@@ -31,6 +32,7 @@ describe('avatar picker module tests', () => {
     it('should each supported methods has getAvatar as method', () => {
       expect(typeof(avatarPicker.facebook.getAvatar)).to.eql('function');
       expect(typeof(avatarPicker.github.getAvatar)).to.eql('function');
+      expect(typeof(avatarPicker.gmail.getAvatar)).to.eql('function');
       expect(typeof(avatarPicker.instagram.getAvatar)).to.eql('function');
       expect(typeof(avatarPicker.tumblr.getAvatar)).to.eql('function');
       expect(typeof(avatarPicker.twitter.getAvatar)).to.eql('function');
@@ -40,6 +42,7 @@ describe('avatar picker module tests', () => {
     it('should each supported methods has getAvatarUrl as method', () => {
       expect(typeof(avatarPicker.facebook.getAvatarUrl)).to.eql('function');
       expect(typeof(avatarPicker.github.getAvatarUrl)).to.eql('function');
+      expect(typeof(avatarPicker.gmail.getAvatarUrl)).to.eql('function');
       expect(typeof(avatarPicker.instagram.getAvatarUrl)).to.eql('function');
       expect(typeof(avatarPicker.tumblr.getAvatarUrl)).to.eql('function');
       expect(typeof(avatarPicker.twitter.getAvatarUrl)).to.eql('function');
@@ -50,6 +53,7 @@ describe('avatar picker module tests', () => {
       const [
         fbProfileImageUrl,
         githubProfileImageUrl,
+        gmailProfileImageUrl,
         instagramProfileImageUrl,
         tumblrProfileImageUrl,
         twitterProfileImageUrl,
@@ -58,15 +62,29 @@ describe('avatar picker module tests', () => {
       ] = await Promise.all([
         avatarPicker.facebook.getAvatarUrl('zuck'),
         avatarPicker.github.getAvatarUrl('eldimious'),
+        avatarPicker.gmail.getAvatarUrl('botsaris.d@gmail.com'),
         avatarPicker.instagram.getAvatarUrl('cnn'),
         avatarPicker.tumblr.getAvatarUrl('tumblr'),
         avatarPicker.twitter.getAvatarUrl('el_dimious'),
         avatarPicker.vimeo.getAvatarUrl('cnn'),
         avatarPicker.youtube.getAvatarUrl('cnn'),
       ]);
-      expect(fbProfileImageUrl.split('?')[0]).to.equal(profileImages.facebook.profileImageUrl);
+      expect(fbProfileImageUrl
+        .split('?')[0]
+        .split('fbcdn.net/')[1]
+        .split('.jpg')[0]
+        .split('/')
+        .pop()
+      ).to.equal(profileImages.facebook.profileImageUrl);
       expect(githubProfileImageUrl).to.equal(profileImages.github.profileImageUrl);
-      expect(instagramProfileImageUrl.split('?')[0]).to.equal(profileImages.instagram.profileImageUrl);
+      expect(gmailProfileImageUrl).to.equal(profileImages.gmail.profileImageUrl);
+      expect(instagramProfileImageUrl
+        .split('?')[0]
+        .split('cdninstagram.com/')[1]
+        .split('.jpg')[0]
+        .split('/')
+        .pop()
+      ).to.equal(profileImages.instagram.profileImageUrl);
       expect(tumblrProfileImageUrl).to.equal(profileImages.tumblr.profileImageUrl);
       expect(twitterProfileImageUrl).to.equal(profileImages.twitter.profileImageUrl);
       expect(vimeoProfileImageUrl).to.equal(profileImages.vimeo.profileImageUrl);
@@ -76,6 +94,7 @@ describe('avatar picker module tests', () => {
       const [
         fbProfileImage,
         githubProfileImage,
+        gmailProfileImage,
         instagramProfileImage,
         tumblrProfileImage,
         twitterProfileImage,
@@ -84,6 +103,7 @@ describe('avatar picker module tests', () => {
       ] = await Promise.all([
         avatarPicker.facebook.getAvatar('zuck'),
         avatarPicker.github.getAvatar('eldimious'),
+        avatarPicker.gmail.getAvatar('botsaris.d@gmail.com'),
         avatarPicker.instagram.getAvatar('cnn'),
         avatarPicker.tumblr.getAvatar('tumblr'),
         avatarPicker.twitter.getAvatar('el_dimious'),
@@ -92,6 +112,7 @@ describe('avatar picker module tests', () => {
       ]);
       expect(Buffer.from(fbProfileImage).toString('base64')).to.equal(profileImages.facebook.imageBase64);
       expect(Buffer.from(githubProfileImage).toString('base64')).to.equal(profileImages.github.imageBase64);
+      expect(Buffer.from(gmailProfileImage).toString('base64')).to.equal(profileImages.gmail.imageBase64);
       expect(Buffer.from(instagramProfileImage).toString('base64')).to.equal(profileImages.instagram.imageBase64);
       expect(Buffer.from(tumblrProfileImage).toString('base64')).to.equal(profileImages.tumblr.imageBase64);
       expect(Buffer.from(twitterProfileImage).toString('base64')).to.equal(profileImages.twitter.imageBase64);
@@ -101,6 +122,7 @@ describe('avatar picker module tests', () => {
     it('should return throw error missing username', async () => {
       await expect(avatarPicker.facebook.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
       await expect(avatarPicker.github.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
+      await expect(avatarPicker.gmail.getAvatar()).to.eventually.be.rejectedWith('Gmail required as input');
       await expect(avatarPicker.instagram.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
       await expect(avatarPicker.tumblr.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
       await expect(avatarPicker.twitter.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
