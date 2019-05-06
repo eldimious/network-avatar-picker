@@ -17,12 +17,37 @@ describe('validation service', () => {
   it('should validationService has validateUsernameInput as method', () => {
     expect(typeof(validationService.validateUsernameInput)).to.eql('function');
   });
+  it('should validationService has validateEmail as method', () => {
+    expect(typeof(validationService.validateEmail)).to.eql('function');
+  });
+  it('should validationService has validateGmail as method', () => {
+    expect(typeof(validationService.validateGmail)).to.eql('function');
+  });
+  describe('test validateEmail method', () => {
+    it('should throw error - required email', () => {
+      expect(() => validationService.validateEmail()).to.throw('Email required as input');
+    });
+    it('should throw error - add valid email', () => {
+      expect(() => validationService.validateEmail(1)).to.throw('Add a valid email');
+    });
+    it('should throw error - add valid email', () => {
+      expect(() => validationService.validateEmail('wq$%$%$&^^%%@gmail.co1m')).to.throw('Add a valid email');
+    });
+  });
   describe('test validateUsernameInput method', () => {
     it('should throw error - required username', async () => {
       expect(() => validationService.validateUsernameInput()).to.throw('Username required as input');
     });
     it('should throw error - username as string', async () => {
       expect(() => validationService.validateUsernameInput(1)).to.throw('Add username as string');
+    });
+  });
+  describe('test validateGmail method', () => {
+    it('should throw error - required gmail', async () => {
+      expect(() => validationService.validateGmail()).to.throw('Gmail required as input');
+    });
+    it('should throw error - add valid gmail', async () => {
+      expect(() => validationService.validateGmail('test@hotmail.com')).to.throw('Add a valid gmail');
     });
   });
 });
