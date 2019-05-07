@@ -1,3 +1,4 @@
+const cache = require('./cache');
 const facebook = require('./providers/facebook');
 const github = require('./providers/github');
 const gmail = require('./providers/gmail');
@@ -8,15 +9,16 @@ const vimeo = require('./providers/vimeo');
 const youtube = require('./providers/youtube');
 
 class NetworkAvatarPicker {
-  constructor() {
-    this.facebook = facebook.init();
-    this.github = github.init();
-    this.gmail = gmail.init();
-    this.instagram = instagram.init();
-    this.tumblr = tumblr.init();
-    this.twitter = twitter.init();
-    this.vimeo = vimeo.init();
-    this.youtube = youtube.init();
+  constructor(config = {}) {
+    const cacheService = cache.init(config);
+    this.facebook = facebook.init(cacheService);
+    this.github = github.init(cacheService);
+    this.gmail = gmail.init(cacheService);
+    this.instagram = instagram.init(cacheService);
+    this.tumblr = tumblr.init(cacheService);
+    this.twitter = twitter.init(cacheService);
+    this.vimeo = vimeo.init(cacheService);
+    this.youtube = youtube.init(cacheService);
     if (new.target === NetworkAvatarPicker) {
       Object.freeze(this);
     }
