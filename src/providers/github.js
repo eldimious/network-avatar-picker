@@ -14,9 +14,21 @@ const githubProvider = {
     return `https://github.com/${username}.png`;
   },
   async getAvatar(username) {
+    const cache = this.getCache();
+    if (cache) {
+      const avatar = await cache.getCachedValue(`github/avatar/${username}`);
+      if (avatar) return avatar;
+    }
     const profileImageUrl = await this.getAvatarUrl(username);
-    return downloadImage(profileImageUrl, GITHUB);
+    const avatar = await downloadImage(profileImageUrl, GITHUB);
+    cache.setCachedValue(`github/avatar/${username}`, avatar);
+    return avatar;
   },
 };
 
-module.exports.init = () => Object.assign(Object.create(githubProvider));
+
+module.exports.init = cacheService => Object.assign(Object.create(githubProvider), {
+  getCache() {
+    return cacheService;
+  },
+});
