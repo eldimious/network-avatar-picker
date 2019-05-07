@@ -16,12 +16,12 @@ const githubProvider = {
   async getAvatar(username) {
     const cache = this.getCache();
     if (cache) {
-      const avatar = await cache.getCachedValue(`github/avatar/${username}`);
+      const avatar = await cache.getCachedValue(`${GITHUB}/avatar/${username}`);
       if (avatar) return avatar;
     }
     const profileImageUrl = await this.getAvatarUrl(username);
     const avatar = await downloadImage(profileImageUrl, GITHUB);
-    cache.setCachedValue(`github/avatar/${username}`, avatar);
+    if (cache) cache.setCachedValue(`${GITHUB}/avatar/${username}`, avatar);
     return avatar;
   },
 };

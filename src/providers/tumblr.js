@@ -14,9 +14,21 @@ const tumblrProvider = {
     return `https://api.tumblr.com/v2/blog/${username}/avatar`;
   },
   async getAvatar(username) {
+    const cache = this.getCache();
+    if (cache) {
+      const avatar = await cache.getCachedValue(`${TUMBLR}/avatar/${username}`);
+      if (avatar) return avatar;
+    }
     const profileImageUrl = await this.getAvatarUrl(username);
-    return downloadImage(profileImageUrl, TUMBLR);
+    const avatar = await downloadImage(profileImageUrl, TUMBLR);
+    if (cache) cache.setCachedValue(`${TUMBLR}/avatar/${username}`, avatar);
+    return avatar;
   },
 };
 
-module.exports.init = () => Object.assign(Object.create(tumblrProvider));
+
+module.exports.init = cacheService => Object.assign(Object.create(tumblrProvider), {
+  getCache() {
+    return cacheService;
+  },
+});

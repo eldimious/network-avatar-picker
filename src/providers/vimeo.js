@@ -16,13 +16,31 @@ function getUserProfileUrl(username) {
 const vimeoProvider = {
   async getAvatarUrl(username) {
     validateUsernameInput(username);
-    return extractProfileImageUrl(getUserProfileUrl(username), VIMEO);
+    const cache = this.getCache();
+    if (cache) {
+      const url = await cache.getCachedValue(`${VIMEO}/profileUrl/${username}`);
+      if (url) return url;
+    }
+    const url = await extractProfileImageUrl(getUserProfileUrl(username), VIMEO);
+    if (cache) cache.setCachedValue(`${VIMEO}/profileUrl/${username}`, url);
+    return url;
   },
   async getAvatar(username) {
+    const cache = this.getCache();
+    if (cache) {
+      const avatar = await cache.getCachedValue(`${VIMEO}/avatar/${username}`);
+      if (avatar) return avatar;
+    }
     const profileImageUrl = await this.getAvatarUrl(username);
-    return downloadImage(profileImageUrl, VIMEO);
+    const avatar = await downloadImage(profileImageUrl, VIMEO);
+    if (cache) cache.setCachedValue(`${VIMEO}/avatar/${username}`, avatar);
+    return avatar;
   },
 };
 
 
-module.exports.init = () => Object.assign(Object.create(vimeoProvider));
+module.exports.init = cacheService => Object.assign(Object.create(vimeoProvider), {
+  getCache() {
+    return cacheService;
+  },
+});

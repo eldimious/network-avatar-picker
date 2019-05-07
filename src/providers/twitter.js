@@ -14,9 +14,21 @@ const twitterProvider = {
     return `https://twitter.com/${username}/profile_image?size=original`;
   },
   async getAvatar(username) {
+    const cache = this.getCache();
+    if (cache) {
+      const avatar = await cache.getCachedValue(`${TWITTER}/avatar/${username}`);
+      if (avatar) return avatar;
+    }
     const profileImageUrl = await this.getAvatarUrl(username);
-    return downloadImage(profileImageUrl, TWITTER);
+    const avatar = await downloadImage(profileImageUrl, TWITTER);
+    if (cache) cache.setCachedValue(`${TWITTER}/avatar/${username}`, avatar);
+    return avatar;
   },
 };
 
-module.exports.init = () => Object.assign(Object.create(twitterProvider));
+
+module.exports.init = cacheService => Object.assign(Object.create(twitterProvider), {
+  getCache() {
+    return cacheService;
+  },
+});

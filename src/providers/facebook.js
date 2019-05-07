@@ -18,22 +18,22 @@ const facebookProvider = {
     validateUsernameInput(username);
     const cache = this.getCache();
     if (cache) {
-      const url = await cache.getCachedValue(`facebook/profileUrl/${username}`);
+      const url = await cache.getCachedValue(`${FACEBOOK}/profileUrl/${username}`);
       if (url) return url;
     }
     const url = await extractProfileImageUrl(getUserProfileUrl(username), FACEBOOK);
-    if (cache) cache.setCachedValue(`facebook/profileUrl/${username}`, url);
+    if (cache) cache.setCachedValue(`${FACEBOOK}/profileUrl/${username}`, url);
     return url;
   },
   async getAvatar(username) {
     const cache = this.getCache();
     if (cache) {
-      const avatar = await cache.getCachedValue(`facebook/avatar/${username}`);
+      const avatar = await cache.getCachedValue(`${FACEBOOK}/avatar/${username}`);
       if (avatar) return avatar;
     }
     const profileImageUrl = await this.getAvatarUrl(username);
     const avatar = await downloadImage(profileImageUrl, FACEBOOK);
-    cache.setCachedValue(`facebook/avatar/${username}`, avatar);
+    if (cache) cache.setCachedValue(`${FACEBOOK}/avatar/${username}`, avatar);
     return avatar;
   },
 };
