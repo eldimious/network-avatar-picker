@@ -24,6 +24,7 @@ describe('test for common file', () => {
     expect(typeof(common.TWITTER)).to.eql('string');
     expect(typeof(common.VIMEO)).to.eql('string');
     expect(typeof(common.YOUTUBE)).to.eql('string');
+    expect(typeof(common.TTL_REDIS)).to.eql('number');
   });
   it('should common has constants properties', () => {
     expect((common.FACEBOOK)).to.eql('facebook');
@@ -33,6 +34,7 @@ describe('test for common file', () => {
     expect((common.TWITTER)).to.eql('twitter');
     expect((common.VIMEO)).to.eql('vimeo');
     expect((common.YOUTUBE)).to.eql('youtube');
+    expect((common.TTL_REDIS)).to.eql(3600);
   });
   describe('test md5 method', () => {
     it('should return correct output', () => {

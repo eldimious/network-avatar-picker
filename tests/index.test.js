@@ -49,6 +49,16 @@ describe('avatar picker module tests', () => {
       expect(typeof(avatarPicker.vimeo.getAvatarUrl)).to.eql('function');
       expect(typeof(avatarPicker.youtube.getAvatarUrl)).to.eql('function');
     });
+    it('should each supported methods has provider as property', () => {
+      expect((avatarPicker.facebook.provider)).to.eql('facebook');
+      expect((avatarPicker.github.provider)).to.eql('github');
+      expect((avatarPicker.gmail.provider)).to.eql('gmail');
+      expect((avatarPicker.instagram.provider)).to.eql('instagram');
+      expect((avatarPicker.tumblr.provider)).to.eql('tumblr');
+      expect((avatarPicker.twitter.provider)).to.eql('twitter');
+      expect((avatarPicker.vimeo.provider)).to.eql('vimeo');
+      expect((avatarPicker.youtube.provider)).to.eql('youtube');
+    });
     it('should return correct url for each provider', async () => {
       const [
         fbProfileImageUrl,

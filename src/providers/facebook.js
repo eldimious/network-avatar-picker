@@ -1,6 +1,5 @@
 const {
   extractProfileImageUrl,
-  downloadImage,
 } = require('../utils/avatarService');
 const {
   validateUsernameInput,
@@ -8,39 +7,26 @@ const {
 const {
   FACEBOOK,
 } = require('../utils/common');
+const baseProvider = require('./base');
 
 function getUserProfileUrl(username) {
   return `https://mobile.facebook.com/${username}`;
 }
 
-const facebookProvider = {
-  async getAvatarUrl(username) {
-    validateUsernameInput(username);
-    const cache = this.getCache();
-    if (cache) {
-      const url = await cache.getCachedValue(`${FACEBOOK}/profileUrl/${username}`);
-      if (url) return url;
-    }
-    const url = await extractProfileImageUrl(getUserProfileUrl(username), FACEBOOK);
-    if (cache) cache.setCachedValue(`${FACEBOOK}/profileUrl/${username}`, url);
-    return url;
-  },
-  async getAvatar(username) {
-    const cache = this.getCache();
-    if (cache) {
-      const avatar = await cache.getCachedValue(`${FACEBOOK}/avatar/${username}`);
-      if (avatar) return avatar;
-    }
-    const profileImageUrl = await this.getAvatarUrl(username);
-    const avatar = await downloadImage(profileImageUrl, FACEBOOK);
-    if (cache) cache.setCachedValue(`${FACEBOOK}/avatar/${username}`, avatar);
-    return avatar;
-  },
+
+module.exports.init = (cacheService) => {
+  const base = baseProvider.init(cacheService);
+  return Object.assign(Object.create(base), {
+    provider: FACEBOOK,
+    async getAvatarUrl(username) {
+      validateUsernameInput(username);
+      if (cacheService) {
+        const url = await cacheService.getCachedValue(`${FACEBOOK}/profileUrl/${username}`);
+        if (url) return url;
+      }
+      const url = await extractProfileImageUrl(getUserProfileUrl(username), FACEBOOK);
+      if (cacheService) cacheService.setCachedValue(`${FACEBOOK}/profileUrl/${username}`, url);
+      return url;
+    },
+  });
 };
-
-
-module.exports.init = cacheService => Object.assign(Object.create(facebookProvider), {
-  getCache() {
-    return cacheService;
-  },
-});
