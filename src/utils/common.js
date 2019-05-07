@@ -10,6 +10,8 @@ const YOUTUBE = 'youtube';
 const GMAIL = 'gmail';
 const GRAVATAR = 'gravatar';
 
+const TTL_REDIS = 86400;
+
 const md5 = input =>
   crypto
     .createHash('md5')
@@ -27,4 +29,5 @@ module.exports = {
   GMAIL,
   GRAVATAR,
   md5,
+  TTL_REDIS,
 };

@@ -38,6 +38,7 @@
   "homepage": "https://github.com/eldimious/network-avatar-picker#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "redis": "^2.8.0",
     "request": "^2.82.0"
   },
   "devDependencies": {
