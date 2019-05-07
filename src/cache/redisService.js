@@ -4,7 +4,7 @@ const {
 } = require('../utils/common');
 
 const redisService = {
-  async getCachedValue(key) {
+  getCachedValue(key) {
     return new Promise((resolve, reject) => {
       const client = this.getClient();
       if (!client) reject(new Error('No redis instance found'));

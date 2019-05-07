@@ -8,7 +8,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precoveralls": "npm run coverage",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "tests": "nyc mocha tests --recursive --timeout 15000"
+    "tests": "nyc mocha tests --recursive --timeout 15000 --exit"
   },
   "repository": {
     "type": "git",
