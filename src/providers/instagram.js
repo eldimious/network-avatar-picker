@@ -21,11 +21,11 @@ module.exports.init = (cacheService) => {
       validateUsernameInput(username);
       const cache = this.getCache();
       if (cache) {
-        const url = await cache.getCachedValue(`${INSTAGRAM}/profileUrl/${username}`);
+        const url = await cache.getCachedValue(`${this.provider}/profileUrl/${username}`);
         if (url) return url;
       }
-      const url = await extractProfileImageUrl(getUserProfileUrl(username), INSTAGRAM);
-      if (cache) cache.setCachedValue(`${INSTAGRAM}/profileUrl/${username}`, url);
+      const url = await extractProfileImageUrl(getUserProfileUrl(username), this.provider);
+      if (cache) cache.setCachedValue(`${this.provider}/profileUrl/${username}`, url);
       return url;
     },
   });

@@ -14,8 +14,9 @@ const redisService = {
       });
     });
   },
-  setCachedValue(key, value, ttl) {
+  setCachedValue(key, value) {
     const client = this.getClient();
+    const ttl = this.getTTL();
     if (!client) return;
     const valueStr = JSON.stringify(value);
     client.set(key, valueStr);
@@ -28,5 +29,10 @@ module.exports.init = redisConfig => Object.assign(Object.create(redisService), 
   getClient() {
     const client = redis.createClient(redisConfig);
     return client;
+  },
+  getTTL() {
+    return redisConfig && redisConfig.ttl
+      ? redisConfig.ttl
+      : undefined;
   },
 });

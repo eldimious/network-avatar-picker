@@ -21,11 +21,11 @@ module.exports.init = (cacheService) => {
     async getAvatarUrl(username) {
       validateUsernameInput(username);
       if (cacheService) {
-        const url = await cacheService.getCachedValue(`${FACEBOOK}/profileUrl/${username}`);
+        const url = await cacheService.getCachedValue(`${this.provider}/profileUrl/${username}`);
         if (url) return url;
       }
-      const url = await extractProfileImageUrl(getUserProfileUrl(username), FACEBOOK);
-      if (cacheService) cacheService.setCachedValue(`${FACEBOOK}/profileUrl/${username}`, url);
+      const url = await extractProfileImageUrl(getUserProfileUrl(username), this.provider);
+      if (cacheService) cacheService.setCachedValue(`${this.provider}/profileUrl/${username}`, url);
       return url;
     },
   });

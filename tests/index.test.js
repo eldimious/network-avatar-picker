@@ -129,6 +129,90 @@ describe('avatar picker module tests', () => {
       expect(Buffer.from(vimeoProfileImage).toString('base64')).to.equal(profileImages.vimeo.imageBase64);
       expect(Buffer.from(youtubeProfileImage).toString('base64')).to.equal(profileImages.youtube.imageBase64);
     });
+    it('should return image for each provider using caching', async () => {
+      const avatarPickerCaching = new AvatarPickerService({
+        redis: {
+          host: '127.0.0.1',
+          port: '6379',
+          ttl: 15,
+        }
+      });
+      const [
+        fbProfileImage
+      ] = await Promise.all([
+        avatarPickerCaching.facebook.getAvatar('BillGates'),
+      ]);
+      expect(Buffer.from(fbProfileImage).toString('base64')).to.equal(profileImages.facebook.imageBase64Alt);
+      const [
+        fbProfileImageCaching
+      ] = await Promise.all([
+        avatarPickerCaching.facebook.getAvatar('BillGates'),
+      ]);
+      expect(Buffer.from(fbProfileImageCaching).toString('base64')).to.equal(profileImages.facebook.imageBase64Alt);
+    });
+    it('should return correct url for each provider using caching', async () => {
+      const avatarPickerCaching = new AvatarPickerService({
+        redis: {
+          host: '127.0.0.1',
+          port: '6379',
+          ttl: 15,
+        }
+      });
+      const [
+        fbProfileUrl,
+        instagramProfileUrl,
+        youtubeProfileUrl,
+        vimeoProfileUrl,
+      ] = await Promise.all([
+        avatarPickerCaching.facebook.getAvatarUrl('apple'),
+        avatarPickerCaching.instagram.getAvatarUrl('nike'),
+        avatarPickerCaching.youtube.getAvatarUrl('ChromeDevelopers'),
+        avatarPickerCaching.vimeo.getAvatarUrl('JavaZone'),
+      ]);
+      expect(fbProfileUrl
+        .split('?')[0]
+        .split('fbcdn.net/')[1]
+        .split('.jpg')[0]
+        .split('/')
+        .pop()
+      ).to.equal(profileImages.facebook.profileImageUrlAlt);
+      expect(instagramProfileUrl
+        .split('?')[0]
+        .split('cdninstagram.com/')[1]
+        .split('.jpg')[0]
+        .split('/')
+        .pop()
+      ).to.equal(profileImages.instagram.profileImageUrlAlt);
+      expect(youtubeProfileUrl).to.equal(profileImages.youtube.profileImageUrlAlt);
+      expect(vimeoProfileUrl).to.equal(profileImages.vimeo.profileImageUrlAlt);
+      const [
+        fbProfileUrlFromCaching,
+        instagramProfileUrlFromCaching,
+        youtubeProfileUrlFromCaching,
+        vimeoProfileUrlFromCaching,
+      ] = await Promise.all([
+        avatarPickerCaching.facebook.getAvatarUrl('apple'),
+        avatarPickerCaching.instagram.getAvatarUrl('nike'),
+        avatarPickerCaching.youtube.getAvatarUrl('ChromeDevelopers'),
+        avatarPickerCaching.vimeo.getAvatarUrl('JavaZone'),
+      ]);
+      expect(fbProfileUrlFromCaching
+        .split('?')[0]
+        .split('fbcdn.net/')[1]
+        .split('.jpg')[0]
+        .split('/')
+        .pop()
+      ).to.equal(profileImages.facebook.profileImageUrlAlt);
+      expect(instagramProfileUrlFromCaching
+        .split('?')[0]
+        .split('cdninstagram.com/')[1]
+        .split('.jpg')[0]
+        .split('/')
+        .pop()
+      ).to.equal(profileImages.instagram.profileImageUrlAlt);
+      expect(youtubeProfileUrlFromCaching).to.equal(profileImages.youtube.profileImageUrlAlt);
+      expect(vimeoProfileUrlFromCaching).to.equal(profileImages.vimeo.profileImageUrlAlt);
+    });
     it('should return throw error missing username', async () => {
       await expect(avatarPicker.facebook.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
       await expect(avatarPicker.github.getAvatar()).to.eventually.be.rejectedWith('Username required as input');
