@@ -6,7 +6,7 @@ const {
 } = require('../utils/validationService');
 const {
   YOUTUBE,
-} = require('../utils/common');
+} = require('../common/constants');
 const baseProvider = require('./base');
 
 function getUserProfileUrl(username) {

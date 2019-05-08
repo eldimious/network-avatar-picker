@@ -1,7 +1,7 @@
 const redis = require('redis');
 const {
   TTL_REDIS,
-} = require('../utils/common');
+} = require('../common/constants');
 
 const redisService = {
   getCachedValue(key) {

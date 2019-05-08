@@ -1,5 +1,3 @@
-const crypto = require('crypto');
-
 const FACEBOOK = 'facebook';
 const GITHUB = 'github';
 const INSTAGRAM = 'instagram';
@@ -12,12 +10,6 @@ const GRAVATAR = 'gravatar';
 
 const TTL_REDIS = 3600;
 
-const md5 = input =>
-  crypto
-    .createHash('md5')
-    .update(input)
-    .digest('hex');
-
 module.exports = {
   FACEBOOK,
   GITHUB,
@@ -28,6 +20,5 @@ module.exports = {
   YOUTUBE,
   GMAIL,
   GRAVATAR,
-  md5,
   TTL_REDIS,
 };

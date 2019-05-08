@@ -3,7 +3,7 @@ const {
 } = require('../utils/validationService');
 const {
   TUMBLR,
-} = require('../utils/common');
+} = require('../common/constants');
 const baseProvider = require('./base');
 
 module.exports.init = (cacheService) => {

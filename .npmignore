@@ -1,5 +1,7 @@
 *
 !lib/*
 !lib/*/
+!lib/cache/*
+!lib/common/*
 !lib/providers/*
 !lib/utils/*

@@ -3,8 +3,10 @@ const {
 } = require('../utils/validationService');
 const {
   md5,
+} = require('../utils/hashService');
+const {
   GMAIL,
-} = require('../utils/common');
+} = require('../common/constants');
 const baseProvider = require('./base');
 
 
