@@ -7,7 +7,7 @@ const redisService = {
   getCachedValue(key) {
     return new Promise((resolve, reject) => {
       const client = this.getClient();
-      if (!client) reject(new Error('No redis instance found'));
+      if (!client) return reject(new Error('No redis instance found'));
       client.get(key, (err, data) => {
         if (data) return resolve(JSON.parse(data));
         return resolve();
