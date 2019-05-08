@@ -1,21 +1,27 @@
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
+const redis = require('redis-mock');
 const redisService = require('../../src/cache/redisService');
 const profileImages = require('../mockedData/profileImages');
+const sinon = require('sinon');
 
 chai.use(chaiAsPromised);
 const {
   expect,
 } = chai;
 
-let redisSrv;
+const redisSrv = redisService.init();
+let client;
 
 describe('test redis service', () => {
-  beforeEach(() => {
-    redisSrv = redisService.init({
-      host: '127.0.0.1',
-      port: '6379'
-    });
+  before(() => {
+    client = redis.createClient();
+    redisSrv.getClient = function() {
+      return client;
+    }
+    redisSrv.getTTL = function() {
+      return 10;
+    }
   });
   it('should return redisService as object', () => {
     expect(redisSrv).to.not.be.undefined;
@@ -26,6 +32,18 @@ describe('test redis service', () => {
   });
   it('should avatarService has setCachedValue as method', () => {
     expect(typeof(redisSrv.setCachedValue)).to.eql('function');
+  });
+  it('should avatarService has getClient as method', () => {
+    expect(typeof(redisSrv.getClient)).to.eql('function');
+  });
+  it('should avatarService has getTTL as method', () => {
+    expect(typeof(redisSrv.getTTL)).to.eql('function');
+  });
+  it('should call getClient', () => {
+    sinon.spy(redisSrv, "getClient");
+    const cl = redisSrv.getClient();
+    expect(typeof(cl)).to.eql('object');
+    expect((cl.connected)).to.eql(true);
   });
   describe('test getCachedValue method', async () => {
     it('should return undefined', async () => {

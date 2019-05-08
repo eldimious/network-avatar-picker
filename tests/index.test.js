@@ -1,8 +1,11 @@
 const chai = require('chai');
+const redis = require('redis-mock');
 const chaiAsPromised = require('chai-as-promised');
 const AvatarPickerService = require('../src');
 const profileImages = require('./mockedData/profileImages');
-
+const sinon = require('sinon');
+const redisService = require('../src/cache/redisService');
+console.log('xxxx', redisService)
 chai.use(chaiAsPromised);
 const {
   expect,
@@ -11,6 +14,38 @@ const {
 let avatarPicker;
 
 describe('avatar picker module tests', () => {
+  before(() => {
+    sinon.stub(redisService, 'init').callsFake(() => {
+      const client = redis.createClient();
+      return Object.assign(Object.create({
+        getCachedValue(key) {
+          return new Promise((resolve, reject) => {
+            const client = this.getClient();
+            if (!client) reject(new Error('No redis instance found'));
+            client.get(key, (err, data) => {
+              if (data) return resolve(JSON.parse(data));
+              return resolve();
+            });
+          });
+        },
+        setCachedValue(key, value) {
+          const client = this.getClient();
+          const ttl = this.getTTL();
+          if (!client) return;
+          const valueStr = JSON.stringify(value);
+          client.set(key, valueStr);
+          client.expire(key, ttl || TTL_REDIS);
+        },
+      }), {
+        getClient() {
+          return client;
+        },
+        getTTL() {
+          return 10;
+        },
+      })
+    });
+  });
   beforeEach(() => {
     avatarPicker = new AvatarPickerService();
   });
