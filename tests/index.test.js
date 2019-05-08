@@ -5,7 +5,7 @@ const AvatarPickerService = require('../src');
 const profileImages = require('./mockedData/profileImages');
 const sinon = require('sinon');
 const redisService = require('../src/cache/redisService');
-console.log('xxxx', redisService)
+
 chai.use(chaiAsPromised);
 const {
   expect,
