@@ -16,13 +16,17 @@
 - Vimeo
 - Youtube
 
-## Usage
+## Getting Started
+
+### Installing
 
 First, install `network-avatar-picker` as a dependency:
 
 ```shell
 npm install --save network-avatar-picker
 ```
+
+### Usage
 
 Then you should require in order to be able use it:
 
@@ -31,9 +35,11 @@ const AvatarPickerService = require('network-avatar-picker');
 const avatarPicker = new AvatarPickerService();
 ```
 
-Use the `async` methods of the `avatarPicker` instance to get user avatars:
+### Methods
 
-**Get avatar as Buffer:**
+Use the `async` methods of the `avatarPicker` instance to fetch user avatars:
+
+A) **getAvatar**: Fetch avatar image as **Buffer**
 
 - `avatarPicker.facebook.getAvatar(username)`
 - `avatarPicker.twitter.getAvatar(username)`
@@ -44,7 +50,7 @@ Use the `async` methods of the `avatarPicker` instance to get user avatars:
 - `avatarPicker.youtube.getAvatar(username)`
 - `avatarPicker.gmail.getAvatar(email)`
 
-**Get avatar as URL:**
+B) **getAvatarUrl**: Fetch avatar image as **URL**
 
 - `avatarPicker.facebook.getAvatarUrl(username)`
 - `avatarPicker.twitter.getAvatarUrl(username)`
@@ -56,7 +62,7 @@ Use the `async` methods of the `avatarPicker` instance to get user avatars:
 - `avatarPicker.gmail.getAvatarUrl(email)`
 
 
-## Example
+## Examples
 
 1) Fetch **twitter's** cnn user profile picture:
 
@@ -134,4 +140,12 @@ Use the `async` methods of the `avatarPicker` instance to get user avatars:
       // Deal with the fact the chain failed
     }
 })();
+```
+
+## Running the tests
+
+In order to run tests you have to run:
+
+```shell
+npm run tests
 ```
