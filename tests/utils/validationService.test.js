@@ -9,6 +9,7 @@ const {
 
 let avatarPicker;
 
+
 describe('validation service', () => {
   it('should return validationService as object', () => {
     expect(validationService).to.not.be.undefined;
@@ -22,6 +23,9 @@ describe('validation service', () => {
   });
   it('should validationService has validateGmail as method', () => {
     expect(typeof(validationService.validateGmail)).to.eql('function');
+  });
+  it('should validationService has validateRedisConfig as method', () => {
+    expect(typeof(validationService.validateRedisConfig)).to.eql('function');
   });
   describe('test validateEmail method', () => {
     it('should throw error - required email', () => {
@@ -48,6 +52,19 @@ describe('validation service', () => {
     });
     it('should throw error - add valid gmail', () => {
       expect(() => validationService.validateGmail('test@hotmail.com')).to.throw('Add a valid gmail');
+    });
+  });
+  describe('test validateRedisConfig method', () => {
+    it('should throw error - required redis config', () => {
+      expect(() => validationService.validateRedisConfig()).to.throw('Redis configuration required');
+    });
+    it('should throw error - required host', () => {
+      expect(() => validationService.validateRedisConfig({})).to.throw('Redis host required');
+    });
+    it('should throw error - required port', () => {
+      expect(() => validationService.validateRedisConfig({
+        host: '127.0.0.1'
+      })).to.throw('Redis port required');
     });
   });
 });
