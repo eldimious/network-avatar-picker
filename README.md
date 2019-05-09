@@ -33,21 +33,22 @@ npm install --save network-avatar-picker
 You should require the dependency in order to be able use it:
 
 ```javascript
-const AvatarPickerService = require('network-avatar-picker');
-const avatarPicker = new AvatarPickerService();
+const NetworkAvatarPicker = require('network-avatar-picker');
+const avatarPicker = new NetworkAvatarPicker();
 ```
 
 #### Cache configuration using Redis
 
-In 1.4.0 we have introduced support to cache results with Redis! Just pass redis config as param to the AvatarPickerService and it will create a new redis client. Then, we will store the images and avatar's URL to redis.
+In 1.4.0 we have introduced support to cache results with Redis! Just pass redis config as param to the NetworkAvatarPicker and it will create a new redis client. Then, we will store the images and avatar's URL to redis.
 
 ```javascript
-const AvatarPickerService = require('network-avatar-picker');
-const avatarPicker = new AvatarPickerService({
+const NetworkAvatarPicker = require('network-avatar-picker');
+const avatarPicker = new NetworkAvatarPicker({
   redis: {
-    host: '127.0.0.1',
-    port: '6379',
-    ttl: 3600, (optional: expiration caching time in seconds. Default value: 3600)
+    host: '127.0.0.1', // required
+    port: '6379', // required
+    password  : 'your password',    // optional: replace with your password
+    ttl: 3600, // optional: Add your expiration caching time in seconds. Default value: 3600
   }
 });
 ```

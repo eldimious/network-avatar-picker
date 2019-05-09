@@ -25,7 +25,9 @@ module.exports.init = (cacheService) => {
         if (url) return url;
       }
       const url = await extractProfileImageUrl(getUserProfileUrl(username), this.provider);
-      if (cache) cache.setCachedValue(`${this.provider}/profileUrl/${username}`, url);
+      if (cache) {
+        await cache.setCachedValue(`${this.provider}/profileUrl/${username}`, url);
+      }
       return url;
     },
   });

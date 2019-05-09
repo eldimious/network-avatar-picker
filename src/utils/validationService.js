@@ -27,8 +27,22 @@ function validateGmail(email) {
   }
 }
 
+function validateRedisConfig(redisConfig) {
+  if (!redisConfig) {
+    throw new Error('Redis configuration required');
+  }
+  if (!redisConfig.host) {
+    throw new Error('Redis host required');
+  }
+  if (!redisConfig.port) {
+    throw new Error('Redis port required');
+  }
+}
+
+
 module.exports = {
   validateUsernameInput,
   validateEmail,
   validateGmail,
+  validateRedisConfig,
 };

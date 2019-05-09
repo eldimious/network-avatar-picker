@@ -70,7 +70,7 @@ describe('test redis service', () => {
     it('should return undefined because of missing redis client', async () => {
       const redis = redisService.init({});
       redis.getClient = () => undefined;
-      expect(redis.setCachedValue('testKey')).to.be.undefined;
+      expect(await redis.setCachedValue('testKey')).to.be.undefined;
     });
   });
 });

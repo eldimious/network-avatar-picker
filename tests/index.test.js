@@ -18,23 +18,27 @@ describe('avatar picker module tests', () => {
     sinon.stub(redisService, 'init').callsFake(() => {
       const client = redis.createClient();
       return Object.assign(Object.create({
-        getCachedValue(key) {
+        async getCachedValue(key) {
           return new Promise((resolve, reject) => {
             const client = this.getClient();
-            if (!client) reject(new Error('No redis instance found'));
+            if (!client) return reject(new Error('No redis instance found'));
             client.get(key, (err, data) => {
               if (data) return resolve(JSON.parse(data));
               return resolve();
             });
           });
         },
-        setCachedValue(key, value) {
-          const client = this.getClient();
-          const ttl = this.getTTL();
-          if (!client) return;
-          const valueStr = JSON.stringify(value);
-          client.set(key, valueStr);
-          client.expire(key, ttl || TTL_REDIS);
+        async setCachedValue(key, value) {
+          return new Promise((resolve) => {
+            const client = this.getClient();
+            const ttl = this.getTTL();
+            if (!client) return resolve();
+            const valueStr = JSON.stringify(value);
+            return client.set(key, valueStr, 'EX', ttl || TTL_REDIS, (err) => {
+              if (err) return resolve();
+              return resolve();
+            });
+          });
         },
       }), {
         getClient() {

@@ -11,10 +11,13 @@ const baseProvider = {
     }
     const profileImageUrl = await this.getAvatarUrl(username);
     const avatar = await downloadImage(profileImageUrl, this.provider);
-    if (cache) cache.setCachedValue(`${this.provider}/avatar/${username}`, avatar);
+    if (cache) {
+      await cache.setCachedValue(`${this.provider}/avatar/${username}`, avatar);
+    }
     return avatar;
   },
 };
+
 
 module.exports.init = cacheService => Object.assign(Object.create(baseProvider), {
   getCache() {

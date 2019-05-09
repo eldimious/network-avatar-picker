@@ -4,7 +4,7 @@ const {
 } = require('../common/constants');
 
 const redisService = {
-  getCachedValue(key) {
+  async getCachedValue(key) {
     return new Promise((resolve, reject) => {
       const client = this.getClient();
       if (!client) return reject(new Error('No redis instance found'));
@@ -14,13 +14,17 @@ const redisService = {
       });
     });
   },
-  setCachedValue(key, value) {
-    const client = this.getClient();
-    const ttl = this.getTTL();
-    if (!client) return;
-    const valueStr = JSON.stringify(value);
-    client.set(key, valueStr);
-    client.expire(key, ttl || TTL_REDIS);
+  async setCachedValue(key, value) {
+    return new Promise((resolve) => {
+      const client = this.getClient();
+      const ttl = this.getTTL();
+      if (!client) return resolve();
+      const valueStr = JSON.stringify(value);
+      return client.set(key, valueStr, 'EX', ttl || TTL_REDIS, (err) => {
+        if (err) return resolve();
+        return resolve();
+      });
+    });
   },
 };
 
