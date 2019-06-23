@@ -51,5 +51,17 @@ describe('test avatar service', () => {
       expect(vimeoProfileUrl).to.equal(profileImages.vimeo.profileImageUrl);
       expect(youtubeProfileUrl).to.equal(profileImages.youtube.profileImageUrl);
     });
+    it('should throw error missing provider', async () => {
+      await expect(avatarService.extractProfileImageUrl()).to.eventually.be.rejectedWith('Bad provider');
+    });
+  });
+  describe('test downloadImage method', () => {
+    it('should return image', async () => {
+      const res = await avatarService.downloadImage('https://github.com/eldimious.png', 'github');
+      expect(Buffer.from(res).toString('base64')).to.equal(profileImages.github.imageBase64);
+    });
+    it('should return error', async () => {
+      await expect(avatarService.downloadImage()).to.eventually.be.rejectedWith();
+    });
   });
 });

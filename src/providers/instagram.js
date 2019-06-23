@@ -1,28 +1,34 @@
 const {
   extractProfileImageUrl,
-  downloadImage,
 } = require('../utils/avatarService');
 const {
   validateUsernameInput,
 } = require('../utils/validationService');
 const {
   INSTAGRAM,
-} = require('../utils/common');
+} = require('../common/constants');
+const baseProvider = require('./base');
 
 function getUserProfileUrl(username) {
   return `https://www.instagram.com/${username}`;
 }
 
-const instagramProvider = {
-  async getAvatarUrl(username) {
-    validateUsernameInput(username);
-    return extractProfileImageUrl(getUserProfileUrl(username), INSTAGRAM);
-  },
-  async getAvatar(username) {
-    const profileImageUrl = await this.getAvatarUrl(username);
-    return downloadImage(profileImageUrl, INSTAGRAM);
-  },
+module.exports.init = (cacheService) => {
+  const base = baseProvider.init(cacheService);
+  return Object.assign(Object.create(base), {
+    provider: INSTAGRAM,
+    async getAvatarUrl(username) {
+      validateUsernameInput(username);
+      const cache = this.getCache();
+      if (cache) {
+        const url = await cache.getCachedValue(`${this.provider}/profileUrl/${username}`);
+        if (url) return url;
+      }
+      const url = await extractProfileImageUrl(getUserProfileUrl(username), this.provider);
+      if (cache) {
+        await cache.setCachedValue(`${this.provider}/profileUrl/${username}`, url);
+      }
+      return url;
+    },
+  });
 };
-
-
-module.exports.init = () => Object.assign(Object.create(instagramProvider));

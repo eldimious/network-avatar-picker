@@ -8,7 +8,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precoveralls": "npm run coverage",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "tests": "nyc mocha tests --recursive --timeout 15000"
+    "tests": "nyc mocha tests --recursive --timeout 15000 --exit"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
   "homepage": "https://github.com/eldimious/network-avatar-picker#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "redis": "^2.8.0",
     "request": "^2.82.0"
   },
   "devDependencies": {
@@ -54,6 +55,7 @@
     "eslint-plugin-react": "^7.3.0",
     "mocha": "^6.1.4",
     "nyc": "^14.0.0",
+    "redis-mock": "^0.43.0",
     "sinon": "^7.3.2",
     "supertest": "^4.0.2"
   }

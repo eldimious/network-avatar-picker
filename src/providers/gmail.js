@@ -1,24 +1,22 @@
 const {
-  downloadImage,
-} = require('../utils/avatarService');
-const {
   validateGmail,
 } = require('../utils/validationService');
 const {
   md5,
+} = require('../utils/hashService');
+const {
   GMAIL,
-} = require('../utils/common');
+} = require('../common/constants');
+const baseProvider = require('./base');
 
-const gmailProvider = {
-  async getAvatarUrl(username) {
-    validateGmail(username);
-    return `https://gravatar.com/avatar/${md5(username)}?size=500`;
-  },
-  async getAvatar(username) {
-    const profileImageUrl = await this.getAvatarUrl(username);
-    return downloadImage(profileImageUrl, GMAIL);
-  },
+
+module.exports.init = (cacheService) => {
+  const base = baseProvider.init(cacheService);
+  return Object.assign(Object.create(base), {
+    provider: GMAIL,
+    async getAvatarUrl(email) {
+      validateGmail(email);
+      return `https://gravatar.com/avatar/${md5(email)}?size=500`;
+    },
+  });
 };
-
-
-module.exports.init = () => Object.assign(Object.create(gmailProvider));

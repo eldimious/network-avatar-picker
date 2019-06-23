@@ -1,28 +1,34 @@
 const {
   extractProfileImageUrl,
-  downloadImage,
 } = require('../utils/avatarService');
 const {
   validateUsernameInput,
 } = require('../utils/validationService');
 const {
   VIMEO,
-} = require('../utils/common');
+} = require('../common/constants');
+const baseProvider = require('./base');
 
 function getUserProfileUrl(username) {
   return `https://www.vimeo.com/${username}`;
 }
 
-const vimeoProvider = {
-  async getAvatarUrl(username) {
-    validateUsernameInput(username);
-    return extractProfileImageUrl(getUserProfileUrl(username), VIMEO);
-  },
-  async getAvatar(username) {
-    const profileImageUrl = await this.getAvatarUrl(username);
-    return downloadImage(profileImageUrl, VIMEO);
-  },
+module.exports.init = (cacheService) => {
+  const base = baseProvider.init(cacheService);
+  return Object.assign(Object.create(base), {
+    provider: VIMEO,
+    async getAvatarUrl(username) {
+      validateUsernameInput(username);
+      const cache = this.getCache();
+      if (cache) {
+        const url = await cache.getCachedValue(`${this.provider}/profileUrl/${username}`);
+        if (url) return url;
+      }
+      const url = await extractProfileImageUrl(getUserProfileUrl(username), this.provider);
+      if (cache) {
+        await cache.setCachedValue(`${this.provider}/profileUrl/${username}`, url);
+      }
+      return url;
+    },
+  });
 };
-
-
-module.exports.init = () => Object.assign(Object.create(vimeoProvider));
