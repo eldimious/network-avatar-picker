@@ -39,7 +39,7 @@ const avatarPicker = new NetworkAvatarPicker();
 
 #### Cache configuration using Redis
 
-In 1.4.0 we have introduced support to cache results with Redis! Just pass redis config as param to the NetworkAvatarPicker and it will create a new redis client. Then, we will store the images and avatar's URL to redis.
+In **1.4.0** we have introduced support to cache results with Redis! Just pass redis config as param to the NetworkAvatarPicker and it will create a new redis client. Then, we will store the images and avatar's URL to redis.
 
 ```javascript
 const NetworkAvatarPicker = require('network-avatar-picker');
