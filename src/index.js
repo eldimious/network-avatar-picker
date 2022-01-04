@@ -3,16 +3,19 @@ const providersService = require('./providers');
 
 class NetworkAvatarPicker {
   constructor(config = {}) {
-    const cacheService = cache.init(config);
+    let cacheService;
+    if (config && config.redis) {
+      cacheService = cache.init(config.redis).cacheService;
+    }
     const providers = providersService.init(cacheService);
-    this.facebook = providers.facebook;
-    this.github = providers.github;
-    this.gmail = providers.gmail;
-    this.instagram = providers.instagram;
-    this.tumblr = providers.tumblr;
-    this.twitter = providers.twitter;
-    this.vimeo = providers.vimeo;
-    this.youtube = providers.youtube;
+    this.facebook = providers.facebookService;
+    this.github = providers.githubService;
+    this.gmail = providers.gmailService;
+    this.instagram = providers.instagramService;
+    this.tumblr = providers.tumblrService;
+    this.twitter = providers.twitterService;
+    this.vimeo = providers.vimeoService;
+    this.youtube = providers.youtubeService;
     if (new.target === NetworkAvatarPicker) {
       Object.freeze(this);
     }
