@@ -17,7 +17,7 @@ jspm_packages
 .node_repl_history
 
 lib
-index.js
+# index.js
 .coveralls.yml
 # Coverage directory used by tools like istanbul
 coverage
