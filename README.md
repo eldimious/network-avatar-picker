@@ -169,3 +169,11 @@ In order to run tests you have to run:
 ```shell
 npm run tests
 ```
+
+## Support Me
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/eldimious)
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
